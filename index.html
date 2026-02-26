@@ -49,24 +49,53 @@ input{
   border:1px solid #ccc;
 }
 
-/* Avatar */
+/* ===== AVATAR HIJAB 3D ===== */
 .avatar{
-  width:110px;
-  height:110px;
-  background:#FFD93D;
-  border-radius:50%;
-  margin:15px auto;
+  width:130px;
+  height:130px;
+  margin:20px auto;
   position:relative;
 }
-.eye{
-  width:12px;height:12px;background:black;border-radius:50%;position:absolute;top:35px;
+
+.hijab{
+  width:130px;
+  height:130px;
+  background: radial-gradient(circle at 40% 30%, #FFB6D9, #FF6FAE);
+  border-radius:50%;
+  position:absolute;
+  box-shadow: inset -5px -8px 15px rgba(0,0,0,0.2);
 }
-.eye.left{left:30px;}
-.eye.right{right:30px;}
+
+.face{
+  width:95px;
+  height:95px;
+  background:#FFE0BD;
+  border-radius:50%;
+  position:absolute;
+  top:20px;
+  left:17px;
+  box-shadow: inset -4px -6px 10px rgba(0,0,0,0.1);
+}
+
+.eye{
+  width:14px;
+  height:14px;
+  background:black;
+  border-radius:50%;
+  position:absolute;
+  top:45px;
+}
+.eye.left{left:40px;}
+.eye.right{right:40px;}
+
 .mouth{
-  width:35px;height:15px;background:#FF6FAE;
+  width:35px;
+  height:15px;
+  background:#FF4F81;
   border-radius:0 0 35px 35px;
-  position:absolute;bottom:28px;left:37px;
+  position:absolute;
+  bottom:35px;
+  left:47px;
   transition:0.1s;
 }
 .talk{height:30px!important;}
@@ -81,7 +110,6 @@ input{
 </head>
 <body>
 
-<!-- Background Music -->
 <audio autoplay loop>
 <source src="https://actions.google.com/sounds/v1/ambiences/children_playing.ogg">
 </audio>
@@ -93,8 +121,7 @@ input{
     font-weight:bold;
     background:linear-gradient(45deg,#FFD93D,#FF6FAE);
     -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-  ">
+    -webkit-text-fill-color:transparent;">
     🌙 Dunia Anak Sholeh
   </div>
   <div style="font-size:14px;color:white;">
@@ -102,11 +129,13 @@ input{
   </div>
 </div>
 
-<!-- Avatar -->
+<!-- AVATAR HIJAB -->
 <div class="avatar">
-<div class="eye left"></div>
-<div class="eye right"></div>
-<div class="mouth" id="mouth"></div>
+  <div class="hijab"></div>
+  <div class="face"></div>
+  <div class="eye left"></div>
+  <div class="eye right"></div>
+  <div class="mouth" id="mouth"></div>
 </div>
 
 <!-- PREMIUM -->
@@ -171,80 +200,24 @@ document.getElementById("mouth").classList.remove("talk");
 speechSynthesis.speak(u);
 }
 
-const buahData=[["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"],
-["بَطِّيخٌ","Semangka"],["أَنَانَاسٌ","Nanas"],["مَانْجَا","Mangga"],["كَرَزٌ","Ceri"],["خَوْخٌ","Persik"],
-["لَيْمُونٌ","Lemon"],["رُمَّانٌ","Delima"],["جَوَّافَةٌ","Jambu"],["تَمْرٌ","Kurma"],["كُمَّثْرَى","Pir"],
-["أُفُوكَادُو","Alpukat"],["تِينٌ","Tin"],["زَبِيبٌ","Kismis"],["جُوزُ الْهِنْدِ","Kelapa"],["بَابَايَا","Pepaya"],
-["كِيوِي","Kiwi"],["سَفَرْجَلٌ","Quince"],["جِرِيبْ فُرُوت","Grapefruit"],["لِيتْشِي","Leci"],["تَمَرْ هِنْدِي","Asam"]];
-
-const hewanData=[["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"],
-["بَقَرَةٌ","Sapi"],["حِصَانٌ","Kuda"],["دَجَاجَةٌ","Ayam"],["سَمَكَةٌ","Ikan"],["طَائِرٌ","Burung"],
-["قِرْدٌ","Monyet"],["نَمِرٌ","Harimau"],["زَرَافَةٌ","Jerapah"],["ذِئْبٌ","Serigala"],["دُبٌّ","Beruang"],
-["جَمَلٌ","Unta"],["غَنَمٌ","Kambing"],["حِمَارٌ","Keledai"],["فَأْرٌ","Tikus"],["ثُعْبَانٌ","Ular"],
-["سُلَحْفَاةٌ","Kura-kura"],["ضِفْدَعٌ","Katak"],["نَحْلَةٌ","Lebah"],["بَطَّةٌ","Bebek"],["حُوتٌ","Paus"]];
+const buahData=[["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"]];
+const hewanData=[["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"]];
 
 function renderData(){
 let buahHTML="",hewanHTML="";
-let limit=premium?25:5;
-for(let i=0;i<limit;i++){
+for(let i=0;i<buahData.length;i++){
 buahHTML+=`<div class="word" onclick="speak('${buahData[i][0]}')">${buahData[i][0]} - ${buahData[i][1]}</div>`;
 hewanHTML+=`<div class="word" onclick="speak('${hewanData[i][0]}')">${hewanData[i][0]} - ${hewanData[i][1]}</div>`;
-}
-if(!premium){
-buahHTML+=`<div class="lock">🔒 20 Buah Terkunci</div>`;
-hewanHTML+=`<div class="lock">🔒 20 Hewan Terkunci</div>`;
 }
 document.getElementById("buah").innerHTML=buahHTML;
 document.getElementById("hewan").innerHTML=hewanHTML;
 }
 renderData();
 
-let quizData=[...buahData,...hewanData];
-let questions=[],current=0,score=0;
-
-function startQuiz(){
-questions=[...quizData].sort(()=>Math.random()-0.5).slice(0,premium?20:5);
-current=0;score=0;nextQ();
-}
-
-function nextQ(){
-if(current>=questions.length){
-document.getElementById("quizArea").innerHTML="🎉 Selesai!";
-document.getElementById("score").innerHTML="Skor: "+score+"/"+questions.length;
-return;
-}
-let q=questions[current];
-speak(q[0]);
-
-let options=[q[1]];
-while(options.length<4){
-let rand=quizData[Math.floor(Math.random()*quizData.length)][1];
-if(!options.includes(rand)) options.push(rand);
-}
-options.sort(()=>Math.random()-0.5);
-
-let html="<h4>"+q[0]+"</h4>";
-options.forEach(o=>{
-html+=`<button onclick="check('${o}')">${o}</button>`;
-});
-document.getElementById("quizArea").innerHTML=html;
-}
-
-function check(ans){
-if(ans===questions[current][1]) score++;
-current++;nextQ();
-}
-
 function chat(){
 let input=document.getElementById("chatInput").value.trim();
 let reply="عذراً، لم أفهم السؤال";
-if(!premium){reply="🔒 Chat Premium Terkunci";}
-else{
 if(input.includes("السلام")) reply="وعليكم السلام ورحمة الله وبركاته";
-else if(input.includes("اسمك")) reply="اسمي تطبيق دنيا الطفل الصالح";
-else if(input.includes("كيف حالك")) reply="أنا بخير الحمد لله";
-else if(input.includes("تحب")) reply="أحب تعلم اللغة العربية";
-}
 document.getElementById("chatBox").innerHTML="🤖 "+reply;
 speak(reply);
 }
