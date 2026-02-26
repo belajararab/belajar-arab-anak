@@ -218,6 +218,7 @@ const hewanData=[
 ["جَمَلٌ","Unta"],["غَنَمٌ","Kambing"],["حِمَارٌ","Keledai"],["فَأْرٌ","Tikus"],["ثُعْبَانٌ","Ular"],
 ["سُلَحْفَاةٌ","Kura-kura"],["ضِفْدَعٌ","Katak"],["نَحْلَةٌ","Lebah"],["بَطَّةٌ","Bebek"],["حُوتٌ","Paus"]
 ];
+
 function renderData(){
 let buahHTML="",hewanHTML="";
 
@@ -242,6 +243,8 @@ document.getElementById("buah").innerHTML=buahHTML;
 document.getElementById("hewan").innerHTML=hewanHTML;
 }
 
+function
+renderData();
 let quizData=[...buahData,...hewanData];
 let questions=[],current=0,scoreQuiz=0;
 
@@ -283,7 +286,6 @@ if(ans===questions[current][1]) scoreQuiz++;
 current++;
 nextQuestion();
 }
-
 function chat(){
 let input=document.getElementById("chatInput").value.trim().toLowerCase();
 let reply="عذراً، لم أفهم السؤال";
