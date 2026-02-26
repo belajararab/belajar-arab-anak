@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dunia Anak Sholeh - Belajar Arab Ceria</title>
+<title>Dunia Anak Sholeh</title>
 
 <style>
 body{
@@ -15,49 +15,6 @@ body{
   text-align:center;
 }
 
-/* ===== AVATAR ===== */
-.avatar-box{
-  margin-top:10px;
-}
-
-.avatar{
-  width:120px;
-  height:120px;
-  background:#FFD93D;
-  border-radius:50%;
-  margin:auto;
-  position:relative;
-  box-shadow:0 5px 15px rgba(0,0,0,0.3);
-}
-
-.eye{
-  width:15px;
-  height:15px;
-  background:black;
-  border-radius:50%;
-  position:absolute;
-  top:40px;
-}
-
-.eye.left{ left:35px; }
-.eye.right{ right:35px; }
-
-.mouth{
-  width:40px;
-  height:20px;
-  background:#FF6FAE;
-  border-radius:0 0 40px 40px;
-  position:absolute;
-  bottom:30px;
-  left:40px;
-  transition:0.1s;
-}
-
-.talking{
-  height:35px !important;
-}
-
-/* ===== SECTION ===== */
 .section{
   background:white;
   color:#333;
@@ -76,156 +33,222 @@ body{
   cursor:pointer;
 }
 
-.word:hover{
-  background:#FF6FAE;
-  color:white;
-}
-
 button{
   background:#FF6FAE;
   border:none;
-  padding:10px 18px;
-  margin:8px;
-  border-radius:15px;
-  font-size:15px;
+  padding:10px 15px;
+  margin:6px;
+  border-radius:12px;
   color:white;
   cursor:pointer;
-  transition:0.3s;
 }
 
-button:hover{
-  transform:scale(1.1);
+input{
+  padding:8px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+
+/* Avatar */
+.avatar{
+  width:110px;
+  height:110px;
   background:#FFD93D;
-  color:black;
+  border-radius:50%;
+  margin:15px auto;
+  position:relative;
 }
+.eye{
+  width:12px;height:12px;background:black;border-radius:50%;position:absolute;top:35px;
+}
+.eye.left{left:30px;}
+.eye.right{right:30px;}
+.mouth{
+  width:35px;height:15px;background:#FF6FAE;
+  border-radius:0 0 35px 35px;
+  position:absolute;bottom:28px;left:37px;
+  transition:0.1s;
+}
+.talk{height:30px!important;}
 
-.score{font-weight:bold;margin-top:10px;}
+.lock{
+  background:#eee;
+  padding:10px;
+  border-radius:10px;
+  margin-top:10px;
+}
 </style>
 </head>
 <body>
 
-<!-- ===== BACKGROUND MUSIC ===== -->
+<!-- Background Music -->
 <audio autoplay loop>
 <source src="https://actions.google.com/sounds/v1/ambiences/children_playing.ogg">
 </audio>
 
-<!-- ===== IKON ANAK ===== -->
-<div class="avatar-box">
-  <div class="avatar">
-    <div class="eye left"></div>
-    <div class="eye right"></div>
-    <div class="mouth" id="mouth"></div>
+<!-- BRAND -->
+<div style="margin-top:10px;">
+  <div style="
+    font-size:28px;
+    font-weight:bold;
+    background:linear-gradient(45deg,#FFD93D,#FF6FAE);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  ">
+    🌙 Dunia Anak Sholeh
   </div>
-  <h2>🌙 Dunia Anak Sholeh</h2>
+  <div style="font-size:14px;color:white;">
+    Belajar Arab Ceria Anak Muslim
+  </div>
 </div>
 
-<!-- ================= BELAJAR BUAH ================= -->
+<!-- Avatar -->
+<div class="avatar">
+<div class="eye left"></div>
+<div class="eye right"></div>
+<div class="mouth" id="mouth"></div>
+</div>
+
+<!-- PREMIUM -->
+<div class="section">
+<h3>🔓 Aktifkan Premium</h3>
+<input type="password" id="kode" placeholder="Masukkan kode">
+<button onclick="unlock()">Unlock</button>
+<div id="status"></div>
+</div>
+
+<!-- BUAH -->
 <div class="section">
 <h3>🍎 Belajar Buah</h3>
-<div class="word" onclick="speak('تفاح')">تُفَّاحٌ — Apel</div>
-<div class="word" onclick="speak('موز')">مَوْزٌ — Pisang</div>
-<div class="word" onclick="speak('برتقال')">بُرْتُقَالٌ — Jeruk</div>
-<div class="word" onclick="speak('عنب')">عِنَبٌ — Anggur</div>
-<div class="word" onclick="speak('فراولة')">فَرَاوِلَةٌ — Stroberi</div>
+<div id="buah"></div>
 </div>
 
-<!-- ================= BELAJAR HEWAN ================= -->
+<!-- HEWAN -->
 <div class="section">
 <h3>🐰 Belajar Hewan</h3>
-<div class="word" onclick="speak('قط')">قِطٌّ — Kucing</div>
-<div class="word" onclick="speak('كلب')">كَلْبٌ — Anjing</div>
-<div class="word" onclick="speak('ارنب')">أَرْنَبٌ — Kelinci</div>
-<div class="word" onclick="speak('فيل')">فِيلٌ — Gajah</div>
-<div class="word" onclick="speak('اسد')">أَسَدٌ — Singa</div>
+<div id="hewan"></div>
 </div>
 
-<!-- ================= PERCAKAPAN ================= -->
+<!-- QUIZ -->
 <div class="section">
-<h3>🗣 Percakapan</h3>
-<div class="word" onclick="speak('السلام عليكم')">السَّلَامُ عَلَيْكُمْ</div>
-<div class="word" onclick="speak('ما اسمك')">مَا اسْمُكَ؟</div>
-<div class="word" onclick="speak('كيف حالك')">كَيْفَ حَالُكَ؟</div>
-<div class="word" onclick="speak('شكرا')">شُكْرًا</div>
-</div>
-
-<!-- ================= QUIZ ================= -->
-<div class="section">
-<h3>🎮 Quiz</h3>
-<button onclick="startQuiz()">Mulai Quiz</button>
+<h3>👧 Almira Quiz</h3>
+<button onclick="startQuiz()">👧 Mulai Quiz Bersama Almira</button>
 <div id="quizArea"></div>
-<div class="score" id="score"></div>
+<div id="score"></div>
 </div>
 
-<audio id="benar" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
-<audio id="salah" src="https://actions.google.com/sounds/v1/cartoon/boing.ogg"></audio>
+<!-- CHAT -->
+<div class="section">
+<h3>🤖 Chat Arab</h3>
+<input id="chatInput" placeholder="Tulis pertanyaan Arab">
+<button onclick="chat()">Kirim</button>
+<div id="chatBox"></div>
+</div>
 
 <script>
 
-// ===== AVATAR TALK ANIMATION =====
-function animateMouth(on){
-let mouth=document.getElementById("mouth");
-if(on){ mouth.classList.add("talking"); }
-else{ mouth.classList.remove("talking"); }
+let premium = localStorage.getItem("premium")==="true";
+
+function unlock(){
+let kode=document.getElementById("kode").value;
+if(kode==="ANAKSOLEH2026"){
+premium=true;
+localStorage.setItem("premium","true");
+document.getElementById("status").innerHTML="✅ Premium Aktif!";
+renderData();
+}else{
+document.getElementById("status").innerHTML="❌ Kode Salah";
+}
 }
 
-// ===== TEXT TO SPEECH =====
 function speak(text){
-let u = new SpeechSynthesisUtterance(text);
+let u=new SpeechSynthesisUtterance(text);
 u.lang="ar-SA";
-animateMouth(true);
-u.onend=function(){ animateMouth(false); };
+document.getElementById("mouth").classList.add("talk");
+u.onend=function(){
+document.getElementById("mouth").classList.remove("talk");
+}
 speechSynthesis.speak(u);
 }
 
-// ===== QUIZ =====
-const data = [
-{ar:"تُفَّاحٌ",id:"Apel"},
-{ar:"قِطٌّ",id:"Kucing"},
-{ar:"شُكْرًا",id:"Terima kasih"},
-{ar:"فِيلٌ",id:"Gajah"}
-];
+const buahData=[["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"],
+["بَطِّيخٌ","Semangka"],["أَنَانَاسٌ","Nanas"],["مَانْجَا","Mangga"],["كَرَزٌ","Ceri"],["خَوْخٌ","Persik"],
+["لَيْمُونٌ","Lemon"],["رُمَّانٌ","Delima"],["جَوَّافَةٌ","Jambu"],["تَمْرٌ","Kurma"],["كُمَّثْرَى","Pir"],
+["أُفُوكَادُو","Alpukat"],["تِينٌ","Tin"],["زَبِيبٌ","Kismis"],["جُوزُ الْهِنْدِ","Kelapa"],["بَابَايَا","Pepaya"],
+["كِيوِي","Kiwi"],["سَفَرْجَلٌ","Quince"],["جِرِيبْ فُرُوت","Grapefruit"],["لِيتْشِي","Leci"],["تَمَرْ هِنْدِي","Asam"]];
 
-let current=0;
-let score=0;
+const hewanData=[["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"],
+["بَقَرَةٌ","Sapi"],["حِصَانٌ","Kuda"],["دَجَاجَةٌ","Ayam"],["سَمَكَةٌ","Ikan"],["طَائِرٌ","Burung"],
+["قِرْدٌ","Monyet"],["نَمِرٌ","Harimau"],["زَرَافَةٌ","Jerapah"],["ذِئْبٌ","Serigala"],["دُبٌّ","Beruang"],
+["جَمَلٌ","Unta"],["غَنَمٌ","Kambing"],["حِمَارٌ","Keledai"],["فَأْرٌ","Tikus"],["ثُعْبَانٌ","Ular"],
+["سُلَحْفَاةٌ","Kura-kura"],["ضِفْدَعٌ","Katak"],["نَحْلَةٌ","Lebah"],["بَطَّةٌ","Bebek"],["حُوتٌ","Paus"]];
+
+function renderData(){
+let buahHTML="",hewanHTML="";
+let limit=premium?25:5;
+for(let i=0;i<limit;i++){
+buahHTML+=`<div class="word" onclick="speak('${buahData[i][0]}')">${buahData[i][0]} - ${buahData[i][1]}</div>`;
+hewanHTML+=`<div class="word" onclick="speak('${hewanData[i][0]}')">${hewanData[i][0]} - ${hewanData[i][1]}</div>`;
+}
+if(!premium){
+buahHTML+=`<div class="lock">🔒 20 Buah Terkunci</div>`;
+hewanHTML+=`<div class="lock">🔒 20 Hewan Terkunci</div>`;
+}
+document.getElementById("buah").innerHTML=buahHTML;
+document.getElementById("hewan").innerHTML=hewanHTML;
+}
+renderData();
+
+let quizData=[...buahData,...hewanData];
+let questions=[],current=0,score=0;
 
 function startQuiz(){
-current=0;
-score=0;
-nextQuestion();
+questions=[...quizData].sort(()=>Math.random()-0.5).slice(0,premium?20:5);
+current=0;score=0;nextQ();
 }
 
-function nextQuestion(){
-if(current>=data.length){
+function nextQ(){
+if(current>=questions.length){
 document.getElementById("quizArea").innerHTML="🎉 Selesai!";
-document.getElementById("score").innerHTML="Skor: "+score+" / "+data.length;
+document.getElementById("score").innerHTML="Skor: "+score+"/"+questions.length;
 return;
 }
+let q=questions[current];
+speak(q[0]);
 
-let q=data[current];
-speak(q.ar);
+let options=[q[1]];
+while(options.length<4){
+let rand=quizData[Math.floor(Math.random()*quizData.length)][1];
+if(!options.includes(rand)) options.push(rand);
+}
+options.sort(()=>Math.random()-0.5);
 
-let options=[q.id,"Salah 1","Salah 2"].sort(()=>Math.random()-0.5);
-
-let html="<h4>"+q.ar+"</h4>";
+let html="<h4>"+q[0]+"</h4>";
 options.forEach(o=>{
 html+=`<button onclick="check('${o}')">${o}</button>`;
 });
-
 document.getElementById("quizArea").innerHTML=html;
 }
 
 function check(ans){
-if(ans===data[current].id){
-score++;
-document.getElementById("benar").play();
-}else{
-document.getElementById("salah").play();
+if(ans===questions[current][1]) score++;
+current++;nextQ();
 }
-current++;
-nextQuestion();
+
+function chat(){
+let input=document.getElementById("chatInput").value.trim();
+let reply="عذراً، لم أفهم السؤال";
+if(!premium){reply="🔒 Chat Premium Terkunci";}
+else{
+if(input.includes("السلام")) reply="وعليكم السلام ورحمة الله وبركاته";
+else if(input.includes("اسمك")) reply="اسمي تطبيق دنيا الطفل الصالح";
+else if(input.includes("كيف حالك")) reply="أنا بخير الحمد لله";
+else if(input.includes("تحب")) reply="أحب تعلم اللغة العربية";
+}
+document.getElementById("chatBox").innerHTML="🤖 "+reply;
+speak(reply);
 }
 
 </script>
-
 </body>
 </html>
