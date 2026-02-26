@@ -49,13 +49,25 @@ input{
   border:1px solid #ccc;
 }
 
-/* ===== AVATAR HIJAB 3D ===== */
+/* ===== AVATAR
+<div id="levelBox" style="
+background:white;
+color:#333;
+padding:8px;
+border-radius:12px;
+max-width:300px;
+margin:10px auto;
+font-weight:bold;">
+</div>
+
+HIJAB 3D ===== */
 .avatar{
   width:130px;
   height:130px;
   margin:20px auto;
   position:relative;
 }
+
 .hijab{
   width:130px;
   height:130px;
@@ -64,6 +76,7 @@ input{
   position:absolute;
   box-shadow: inset -5px -8px 15px rgba(0,0,0,0.2);
 }
+
 .face{
   width:95px;
   height:95px;
@@ -74,6 +87,7 @@ input{
   left:17px;
   box-shadow: inset -4px -6px 10px rgba(0,0,0,0.1);
 }
+
 .eye{
   width:14px;
   height:14px;
@@ -84,6 +98,7 @@ input{
 }
 .eye.left{left:40px;}
 .eye.right{right:40px;}
+
 .mouth{
   width:35px;
   height:15px;
@@ -102,16 +117,6 @@ input{
   border-radius:10px;
   margin-top:10px;
 }
-
-.levelbox{
-  background:white;
-  color:#333;
-  padding:8px;
-  border-radius:12px;
-  max-width:300px;
-  margin:10px auto;
-  font-weight:bold;
-}
 </style>
 </head>
 <body>
@@ -120,14 +125,22 @@ input{
 <source src="https://actions.google.com/sounds/v1/ambiences/children_playing.ogg">
 </audio>
 
-<div style="font-size:28px;font-weight:bold;
-background:linear-gradient(45deg,#FFD93D,#FF6FAE);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;">
-🌙 Dunia Anak Sholeh
+<!-- BRAND -->
+<div style="margin-top:10px;">
+  <div style="
+    font-size:28px;
+    font-weight:bold;
+    background:linear-gradient(45deg,#FFD93D,#FF6FAE);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;">
+    🌙 Dunia Anak Sholeh
+  </div>
+  <div style="font-size:14px;color:white;">
+    Belajar Arab Ceria Anak Muslim
+  </div>
 </div>
-<div style="font-size:14px;">Belajar Arab Ceria Anak Muslim</div>
 
+<!-- AVATAR HIJAB -->
 <div class="avatar">
   <div class="hijab"></div>
   <div class="face"></div>
@@ -136,8 +149,7 @@ background:linear-gradient(45deg,#FFD93D,#FF6FAE);
   <div class="mouth" id="mouth"></div>
 </div>
 
-<div id="levelBox" class="levelbox"></div>
-
+<!-- PREMIUM -->
 <div class="section">
 <h3>🔓 Aktifkan Premium</h3>
 <input type="password" id="kode" placeholder="Masukkan kode">
@@ -145,26 +157,30 @@ background:linear-gradient(45deg,#FFD93D,#FF6FAE);
 <div id="status"></div>
 </div>
 
+<!-- BUAH -->
 <div class="section">
 <h3>🍎 Belajar Buah</h3>
 <div id="buah"></div>
 </div>
 
+<!-- HEWAN -->
 <div class="section">
 <h3>🐰 Belajar Hewan</h3>
 <div id="hewan"></div>
 </div>
 
+<!-- QUIZ -->
 <div class="section">
 <h3>👧 Almira Quiz</h3>
-<button onclick="startQuiz()">Mulai Quiz</button>
+<button onclick="startQuiz()">👧 Mulai Quiz Bersama Almira</button>
 <div id="quizArea"></div>
 <div id="score"></div>
 </div>
 
+<!-- CHAT -->
 <div class="section">
-<h3>🤖 Chat Arab Pintar</h3>
-<input id="chatInput" placeholder="Tulis pertanyaan">
+<h3>🤖 Chat Arab</h3>
+<input id="chatInput" placeholder="Tulis pertanyaan Arab">
 <button onclick="chat()">Kirim</button>
 <div id="chatBox"></div>
 </div>
@@ -172,15 +188,14 @@ background:linear-gradient(45deg,#FFD93D,#FF6FAE);
 <script>
 
 let premium = localStorage.getItem("premium")==="true";
+
 let level = parseInt(localStorage.getItem("level")) || 1;
 let stars = parseInt(localStorage.getItem("stars")) || 0;
-let namaAnak = localStorage.getItem("namaAnak") || "";
 
 function updateLevelUI(){
-document.getElementById("levelBox").innerHTML=
-"⭐ "+stars+" | 🏆 Level "+level;
+document.getElementById("levelBox").innerHTML =
+"⭐ Bintang: "+stars+" | 🏆 Level: "+level;
 }
-updateLevelUI();
 
 function unlock(){
 let kode=document.getElementById("kode").value;
@@ -188,6 +203,7 @@ if(kode==="ANAKSOLEH2026"){
 premium=true;
 localStorage.setItem("premium","true");
 document.getElementById("status").innerHTML="✅ Premium Aktif!";
+renderData();
 }else{
 document.getElementById("status").innerHTML="❌ Kode Salah";
 }
@@ -202,141 +218,116 @@ document.getElementById("mouth").classList.remove("talk");
 }
 speechSynthesis.speak(u);
 }
-const buahData=[
-["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"],
-["بَطِّيخٌ","Semangka"],["أَنَانَاسٌ","Nanas"],["مَانْجَا","Mangga"],["كَرَزٌ","Ceri"],["خَوْخٌ","Persik"],
-["لَيْمُونٌ","Lemon"],["رُمَّانٌ","Delima"],["جَوَّافَةٌ","Jambu"],["تَمْرٌ","Kurma"],["كُمَّثْرَى","Pir"],
-["أُفُوكَادُو","Alpukat"],["تِينٌ","Tin"],["زَبِيبٌ","Kismis"],["جُوزُ الْهِنْدِ","Kelapa"],["بَابَايَا","Pepaya"],
-["كِيوِي","Kiwi"],["سَفَرْجَلٌ","Quince"],["جِرِيبْ فُرُوت","Grapefruit"],["لِيتْشِي","Leci"],["تَمَرْ هِنْدِي","Asam"]
-];
 
-const hewanData=[
-["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"],
-["بَقَرَةٌ","Sapi"],["حِصَانٌ","Kuda"],["دَجَاجَةٌ","Ayam"],["سَمَكَةٌ","Ikan"],["طَائِرٌ","Burung"],
-["قِرْدٌ","Monyet"],["نَمِرٌ","Harimau"],["زَرَافَةٌ","Jerapah"],["ذِئْبٌ","Serigala"],["دُبٌّ","Beruang"],
-["جَمَلٌ","Unta"],["غَنَمٌ","Kambing"],["حِمَارٌ","Keledai"],["فَأْرٌ","Tikus"],["ثُعْبَانٌ","Ular"],
-["سُلَحْفَاةٌ","Kura-kura"],["ضِفْدَعٌ","Katak"],["نَحْلَةٌ","Lebah"],["بَطَّةٌ","Bebek"],["حُوتٌ","Paus"]
-];
-
+const buahData=[["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"]];
+const hewanData=[["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"]];
 
 function renderData(){
 let buahHTML="",hewanHTML="";
-
-let limit = premium ? 25 : 5;
-
-for(let i=0;i<limit;i++){
-buahHTML+=`<div class="word" onclick="speak('${buahData[i][0]}')">
-${buahData[i][0]} - ${buahData[i][1]}</div>`;
+for(let i=0;i<buahData.length;i++){
+buahHTML+=`<div class="word" onclick="speak('${buahData[i][0]}')">${buahData[i][0]} - ${buahData[i][1]}</div>`;
+hewanHTML+=`<div class="word" onclick="speak('${hewanData[i][0]}')">${hewanData[i][0]} - ${hewanData[i][1]}</div>`;
 }
-
-for(let i=0;i<limit;i++){
-hewanHTML+=`<div class="word" onclick="speak('${hewanData[i][0]}')">
-${hewanData[i][0]} - ${hewanData[i][1]}</div>`;
-}
-
-if(!premium){
-buahHTML+=`<div class="lock">🔒 20 Buah Terkunci</div>`;
-hewanHTML+=`<div class="lock">🔒 20 Hewan Terkunci</div>`;
-}
-
 document.getElementById("buah").innerHTML=buahHTML;
 document.getElementById("hewan").innerHTML=hewanHTML;
 }
 
+let namaAnak = localStorage.getItem("namaAnak") || "";
+
 renderData();
-let quizData=[...buahData,...hewanData];
-let questions=[],current=0,scoreQuiz=0;
-
-function startQuiz(){
-questions=[...quizData].sort(()=>Math.random()-0.5).slice(0,premium?10:5);
-current=0;
-scoreQuiz=0;
-nextQuestion();
-}
-
-function nextQuestion(){
-if(current>=questions.length){
-document.getElementById("quizArea").innerHTML="🎉 Quiz Selesai!";
-document.getElementById("score").innerHTML=
-"Skor: "+scoreQuiz+"/"+questions.length;
-return;
-}
-
-let q=questions[current];
-speak(q[0]);
-
-let options=[q[1]];
-while(options.length<4){
-let rand=quizData[Math.floor(Math.random()*quizData.length)][1];
-if(!options.includes(rand)) options.push(rand);
-}
-options.sort(()=>Math.random()-0.5);
-
-let html="<h4>"+q[0]+"</h4>";
-options.forEach(o=>{
-html+=`<button onclick="checkAnswer('${o}')">${o}</button>`;
-});
-
-document.getElementById("quizArea").innerHTML=html;
-}
-
-function checkAnswer(ans){
-if(ans===questions[current][1]) scoreQuiz++;
-current++;
-nextQuestion();
-}
-function startQuiz(){
-alert("Quiz aktif 🎉 (bisa dikembangkan lagi)");
-}
-
 function chat(){
 let input=document.getElementById("chatInput").value.trim().toLowerCase();
 let reply="عذراً، لم أفهم السؤال";
 
-if(!premium){
-reply="🔒 Chat Premium Terkunci";
-}else{
-
-if(input.startsWith("nama saya")){
-namaAnak=input.replace("nama saya","").trim();
-localStorage.setItem("namaAnak",namaAnak);
-reply="Senang bertemu denganmu "+namaAnak+" 😊";
-}
-
-else if(input.includes("السلام")){
-reply="وعليكم السلام ورحمة الله وبركاته "+(namaAnak||"sahabat")+" 💕";
-}
-
-else if(input.includes("كيف حالك")){
-reply="أنا بخير الحمد لله 😊";
-}
-
-else if(input.includes("الله")){
-reply="الله ربنا خالق كل شيء 🌙";
-}
-
-else if(input.includes("شكرا")){
-reply="عفواً 💖";
-}
-
-}
-
-document.getElementById("chatBox").innerHTML="🤖 "+reply;
-
-if(reply!=="عذراً، لم أفهم السؤال" && premium){
+// Tambah bintang kalau bukan jawaban default
+if(reply !== "عذراً، لم أفهم السؤال" && premium){
 stars++;
 if(stars>=5){
 level++;
 stars=0;
-alert("🎉 Naik Level "+level);
+alert("🎉 MasyaAllah! Naik ke Level "+level+" 🏆");
 }
 localStorage.setItem("stars",stars);
 localStorage.setItem("level",level);
 updateLevelUI();
 }
+updateLevelUI();
 
+if(!premium){
+  reply="🔒 Chat Premium Terkunci";
+}else{
+
+// Salam
+if(input.includes("السلام")){
+  reply="وعليكم السلام ورحمة الله وبركاته";
+}
+
+// Nama
+else if(input.includes("اسمك") || input.includes("من انت")){
+  reply="اسمي تطبيق دنيا الطفل الصالح";
+}
+
+// Kabar
+else if(input.includes("كيف حالك")){
+  reply="أنا بخير الحمد لله، وأنت؟";
+}
+
+// Suka Arab
+else if(input.includes("تحب") || input.includes("تحبين")){
+  reply="أحب تعلم اللغة العربية لأنها لغة القرآن";
+}
+
+// Umur
+else if(input.includes("كم عمرك")){
+  reply="أنا برنامج صغير لتعليم الأطفال";
+}
+
+// Terima kasih
+else if(input.includes("شكرا")){
+  reply="عفواً يا صديقي";
+}
+
+// Siapa Allah
+else if(input.includes("الله")){
+  reply="الله ربنا خالق كل شيء";
+}
+
+// ===== NABI =====
+else if(input.includes("محمد") || input.includes("nabi")){
+  reply="محمد صلى الله عليه وسلم هو رسول الله 💕";
+}
+
+// Sholat
+else if(input.includes("صلاة") || input.includes("تصلي")){
+  reply="نعم، الصلاة واجبة على كل مسلم";
+}
+
+// Belajar
+else if(input.includes("تتعلم")){
+  reply="نعم، أتعلم كل يوم مع الأطفال";
+}
+
+// Buah
+else if(input.includes("تفاح")){
+  reply="تفاح فاكهة لذيذة";
+}
+
+// Hewan
+else if(input.includes("قطة")){
+  reply="القطة حيوان أليف";
+}
+
+// ===== DOA =====
+else if(input.includes("doa")){
+  reply="Ayo baca doa sebelum belajar 📖✨";
+}
+
+}
+
+document.getElementById("chatBox").innerHTML="🤖 "+reply;
 speak(reply);
 }
+
 
 </script>
 </body>
