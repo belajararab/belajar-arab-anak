@@ -202,21 +202,89 @@ document.getElementById("mouth").classList.remove("talk");
 }
 speechSynthesis.speak(u);
 }
+const buahData=[
+["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"],
+["بَطِّيخٌ","Semangka"],["أَنَانَاسٌ","Nanas"],["مَانْجَا","Mangga"],["كَرَزٌ","Ceri"],["خَوْخٌ","Persik"],
+["لَيْمُونٌ","Lemon"],["رُمَّانٌ","Delima"],["جَوَّافَةٌ","Jambu"],["تَمْرٌ","Kurma"],["كُمَّثْرَى","Pir"],
+["أُفُوكَادُو","Alpukat"],["تِينٌ","Tin"],["زَبِيبٌ","Kismis"],["جُوزُ الْهِنْدِ","Kelapa"],["بَابَايَا","Pepaya"],
+["كِيوِي","Kiwi"],["سَفَرْجَلٌ","Quince"],["جِرِيبْ فُرُوت","Grapefruit"],["لِيتْشِي","Leci"],["تَمَرْ هِنْدِي","Asam"]
+];
 
-const buahData=[["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"]];
-const hewanData=[["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"]];
+const hewanData=[
+["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"],
+["بَقَرَةٌ","Sapi"],["حِصَانٌ","Kuda"],["دَجَاجَةٌ","Ayam"],["سَمَكَةٌ","Ikan"],["طَائِرٌ","Burung"],
+["قِرْدٌ","Monyet"],["نَمِرٌ","Harimau"],["زَرَافَةٌ","Jerapah"],["ذِئْبٌ","Serigala"],["دُبٌّ","Beruang"],
+["جَمَلٌ","Unta"],["غَنَمٌ","Kambing"],["حِمَارٌ","Keledai"],["فَأْرٌ","Tikus"],["ثُعْبَانٌ","Ular"],
+["سُلَحْفَاةٌ","Kura-kura"],["ضِفْدَعٌ","Katak"],["نَحْلَةٌ","Lebah"],["بَطَّةٌ","Bebek"],["حُوتٌ","Paus"]
+];
+
 
 function renderData(){
 let buahHTML="",hewanHTML="";
-for(let i=0;i<buahData.length;i++){
-buahHTML+=`<div class="word" onclick="speak('${buahData[i][0]}')">${buahData[i][0]} - ${buahData[i][1]}</div>`;
-hewanHTML+=`<div class="word" onclick="speak('${hewanData[i][0]}')">${hewanData[i][0]} - ${hewanData[i][1]}</div>`;
+
+let limit = premium ? 25 : 5;
+
+for(let i=0;i<limit;i++){
+buahHTML+=`<div class="word" onclick="speak('${buahData[i][0]}')">
+${buahData[i][0]} - ${buahData[i][1]}</div>`;
 }
+
+for(let i=0;i<limit;i++){
+hewanHTML+=`<div class="word" onclick="speak('${hewanData[i][0]}')">
+${hewanData[i][0]} - ${hewanData[i][1]}</div>`;
+}
+
+if(!premium){
+buahHTML+=`<div class="lock">🔒 20 Buah Terkunci</div>`;
+hewanHTML+=`<div class="lock">🔒 20 Hewan Terkunci</div>`;
+}
+
 document.getElementById("buah").innerHTML=buahHTML;
 document.getElementById("hewan").innerHTML=hewanHTML;
 }
-renderData();
 
+renderData();
+let quizData=[...buahData,...hewanData];
+let questions=[],current=0,scoreQuiz=0;
+
+function startQuiz(){
+questions=[...quizData].sort(()=>Math.random()-0.5).slice(0,premium?10:5);
+current=0;
+scoreQuiz=0;
+nextQuestion();
+}
+
+function nextQuestion(){
+if(current>=questions.length){
+document.getElementById("quizArea").innerHTML="🎉 Quiz Selesai!";
+document.getElementById("score").innerHTML=
+"Skor: "+scoreQuiz+"/"+questions.length;
+return;
+}
+
+let q=questions[current];
+speak(q[0]);
+
+let options=[q[1]];
+while(options.length<4){
+let rand=quizData[Math.floor(Math.random()*quizData.length)][1];
+if(!options.includes(rand)) options.push(rand);
+}
+options.sort(()=>Math.random()-0.5);
+
+let html="<h4>"+q[0]+"</h4>";
+options.forEach(o=>{
+html+=`<button onclick="checkAnswer('${o}')">${o}</button>`;
+});
+
+document.getElementById("quizArea").innerHTML=html;
+}
+
+function checkAnswer(ans){
+if(ans===questions[current][1]) scoreQuiz++;
+current++;
+nextQuestion();
+}
 function startQuiz(){
 alert("Quiz aktif 🎉 (bisa dikembangkan lagi)");
 }
