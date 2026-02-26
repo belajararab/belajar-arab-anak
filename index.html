@@ -4,128 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dunia Anak Sholeh</title>
-
 <style>
-body{
-  font-family: Arial;
-  margin:0;
-  padding:15px;
-  background: linear-gradient(to bottom,#4FC3F7,#6EE7B7);
-  color:white;
-  text-align:center;
-}
-
-.section{
-  background:white;
-  color:#333;
-  margin:20px auto;
-  padding:15px;
-  border-radius:20px;
-  max-width:500px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.2);
-}
-
-.word{
-  background:#FFD93D;
-  margin:6px;
-  padding:8px;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-button{
-  background:#FF6FAE;
-  border:none;
-  padding:10px 15px;
-  margin:6px;
-  border-radius:12px;
-  color:white;
-  cursor:pointer;
-}
-
-input{
-  padding:8px;
-  border-radius:10px;
-  border:1px solid #ccc;
-}
-
-/* ===== AVATAR HIJAB 3D ===== */
-.avatar{
-  width:130px;
-  height:130px;
-  margin:20px auto;
-  position:relative;
-}
-.hijab{
-  width:130px;
-  height:130px;
-  background: radial-gradient(circle at 40% 30%, #FFB6D9, #FF6FAE);
-  border-radius:50%;
-  position:absolute;
-  box-shadow: inset -5px -8px 15px rgba(0,0,0,0.2);
-}
-.face{
-  width:95px;
-  height:95px;
-  background:#FFE0BD;
-  border-radius:50%;
-  position:absolute;
-  top:20px;
-  left:17px;
-  box-shadow: inset -4px -6px 10px rgba(0,0,0,0.1);
-}
-.eye{
-  width:14px;
-  height:14px;
-  background:black;
-  border-radius:50%;
-  position:absolute;
-  top:45px;
-}
-.eye.left{left:40px;}
-.eye.right{right:40px;}
-.mouth{
-  width:35px;
-  height:15px;
-  background:#FF4F81;
-  border-radius:0 0 35px 35px;
-  position:absolute;
-  bottom:35px;
-  left:47px;
-  transition:0.1s;
-}
+body{font-family:Arial;margin:0;padding:15px;background:linear-gradient(to bottom,#4FC3F7,#6EE7B7);color:white;text-align:center;}
+.section{background:white;color:#333;margin:20px auto;padding:15px;border-radius:20px;max-width:500px;box-shadow:0 5px 15px rgba(0,0,0,0.2);}
+.word{background:#FFD93D;margin:6px;padding:8px;border-radius:10px;cursor:pointer;}
+button{background:#FF6FAE;border:none;padding:10px 15px;margin:6px;border-radius:12px;color:white;cursor:pointer;}
+input{padding:8px;border-radius:10px;border:1px solid #ccc;}
+.avatar{width:130px;height:130px;margin:20px auto;position:relative;}
+.hijab{width:130px;height:130px;background:radial-gradient(circle at 40% 30%, #FFB6D9, #FF6FAE);border-radius:50%;position:absolute;box-shadow: inset -5px -8px 15px rgba(0,0,0,0.2);}
+.face{width:95px;height:95px;background:#FFE0BD;border-radius:50%;position:absolute;top:20px;left:17px;box-shadow: inset -4px -6px 10px rgba(0,0,0,0.1);}
+.eye{width:14px;height:14px;background:black;border-radius:50%;position:absolute;top:45px;}
+.eye.left{left:40px;}.eye.right{right:40px;}
+.mouth{width:35px;height:15px;background:#FF4F81;border-radius:0 0 35px 35px;position:absolute;bottom:35px;left:47px;transition:0.1s;}
 .talk{height:30px!important;}
-
-.lock{
-  background:#eee;
-  padding:10px;
-  border-radius:10px;
-  margin-top:10px;
-}
-
-.levelbox{
-  background:white;
-  color:#333;
-  padding:8px;
-  border-radius:12px;
-  max-width:300px;
-  margin:10px auto;
-  font-weight:bold;
-}
+.lock{background:#eee;padding:10px;border-radius:10px;margin-top:10px;}
+.levelbox{background:white;color:#333;padding:8px;border-radius:12px;max-width:300px;margin:10px auto;font-weight:bold;}
 </style>
 </head>
 <body>
-
-<audio autoplay loop>
-<source src="https://actions.google.com/sounds/v1/ambiences/children_playing.ogg">
-</audio>
-
-<div style="font-size:28px;font-weight:bold;
-background:linear-gradient(45deg,#FFD93D,#FF6FAE);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;">
-🌙 Dunia Anak Sholeh
-</div>
+<audio autoplay loop><source src="https://actions.google.com/sounds/v1/ambiences/children_playing.ogg"></audio>
+<div style="font-size:28px;font-weight:bold;background:linear-gradient(45deg,#FFD93D,#FF6FAE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">🌙 Dunia Anak Sholeh</div>
 <div style="font-size:14px;">Belajar Arab Ceria Anak Muslim</div>
 
 <div class="avatar">
@@ -135,7 +33,6 @@ background:linear-gradient(45deg,#FFD93D,#FF6FAE);
   <div class="eye right"></div>
   <div class="mouth" id="mouth"></div>
 </div>
-
 <div id="levelBox" class="levelbox"></div>
 
 <div class="section">
@@ -170,171 +67,75 @@ background:linear-gradient(45deg,#FFD93D,#FF6FAE);
 </div>
 
 <script>
-
 let premium = localStorage.getItem("premium")==="true";
 let level = parseInt(localStorage.getItem("level")) || 1;
 let stars = parseInt(localStorage.getItem("stars")) || 0;
 let namaAnak = localStorage.getItem("namaAnak") || "";
 
-function updateLevelUI(){
-document.getElementById("levelBox").innerHTML=
-"⭐ "+stars+" | 🏆 Level "+level;
-}
+const buahData=[["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"],["بَطِّيخٌ","Semangka"],["أَنَانَاسٌ","Nanas"],["مَانْجَا","Mangga"],["كَرَزٌ","Ceri"],["خَوْخٌ","Persik"],["لَيْمُونٌ","Lemon"],["رُمَّانٌ","Delima"],["جَوَّافَةٌ","Jambu"],["تَمْرٌ","Kurma"],["كُمَّثْرَى","Pir"],["أُفُوكَادُو","Alpukat"],["تِينٌ","Tin"],["زَبِيبٌ","Kismis"],["جُوزُ الْهِنْدِ","Kelapa"],["بَابَايَا","Pepaya"],["كِيوِي","Kiwi"],["سَفَرْجَلٌ","Quince"],["جِرِيبْ فُرُوت","Grapefruit"],["لِيتْشِي","Leci"],["تَمَرْ هِنْدِي","Asam"]];
+const hewanData=[["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"],["بَقَرَةٌ","Sapi"],["حِصَانٌ","Kuda"],["دَجَاجَةٌ","Ayam"],["سَمَكَةٌ","Ikan"],["طَائِرٌ","Burung"],["قِرْدٌ","Monyet"],["نَمِرٌ","Harimau"],["زَرَافَةٌ","Jerapah"],["ذِئْبٌ","Serigala"],["دُبٌّ","Beruang"],["جَمَلٌ","Unta"],["غَنَمٌ","Kambing"],["حِمَارٌ","Keledai"],["فَأْرٌ","Tikus"],["ثُعْبَانٌ","Ular"],["سُلَحْفَاةٌ","Kura-kura"],["ضِفْدَعٌ","Katak"],["نَحْلَةٌ","Lebah"],["بَطَّةٌ","Bebek"],["حُوتٌ","Paus"]];
+
+function updateLevelUI(){document.getElementById("levelBox").innerHTML="⭐ "+stars+" | 🏆 Level "+level;}
 updateLevelUI();
 
 function unlock(){
-let kode=document.getElementById("kode").value;
-if(kode==="ANAKSOLEH2026"){
-premium=true;
-localStorage.setItem("premium","true");
-document.getElementById("status").innerHTML="✅ Premium Aktif!";
-}else{
-document.getElementById("status").innerHTML="❌ Kode Salah";
-}
+  let kode=document.getElementById("kode").value;
+  if(kode==="ANAKSOLEH2026"){premium=true;localStorage.setItem("premium","true");document.getElementById("status").innerHTML="✅ Premium Aktif!";renderData();}
+  else{document.getElementById("status").innerHTML="❌ Kode Salah";}
 }
 
 function speak(text){
-let u=new SpeechSynthesisUtterance(text);
-u.lang="ar-SA";
-document.getElementById("mouth").classList.add("talk");
-u.onend=function(){
-document.getElementById("mouth").classList.remove("talk");
+  let u=new SpeechSynthesisUtterance(text);
+  u.lang="ar-SA";
+  document.getElementById("mouth").classList.add("talk");
+  u.onend=function(){document.getElementById("mouth").classList.remove("talk");}
+  speechSynthesis.speak(u);
 }
-speechSynthesis.speak(u);
-}
-
-const buahData=[
-["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"],
-["بَطِّيخٌ","Semangka"],["أَنَانَاسٌ","Nanas"],["مَانْجَا","Mangga"],["كَرَزٌ","Ceri"],["خَوْخٌ","Persik"],
-["لَيْمُونٌ","Lemon"],["رُمَّانٌ","Delima"],["جَوَّافَةٌ","Jambu"],["تَمْرٌ","Kurma"],["كُمَّثْرَى","Pir"],
-["أُفُوكَادُو","Alpukat"],["تِينٌ","Tin"],["زَبِيبٌ","Kismis"],["جُوزُ الْهِنْدِ","Kelapa"],["بَابَايَا","Pepaya"],
-["كِيوِي","Kiwi"],["سَفَرْجَلٌ","Quince"],["جِرِيبْ فُرُوت","Grapefruit"],["لِيتْشِي","Leci"],["تَمَرْ هِنْدِي","Asam"]
-];
-
-const hewanData=[
-["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"],
-["بَقَرَةٌ","Sapi"],["حِصَانٌ","Kuda"],["دَجَاجَةٌ","Ayam"],["سَمَكَةٌ","Ikan"],["طَائِرٌ","Burung"],
-["قِرْدٌ","Monyet"],["نَمِرٌ","Harimau"],["زَرَافَةٌ","Jerapah"],["ذِئْبٌ","Serigala"],["دُبٌّ","Beruang"],
-["جَمَلٌ","Unta"],["غَنَمٌ","Kambing"],["حِمَارٌ","Keledai"],["فَأْرٌ","Tikus"],["ثُعْبَانٌ","Ular"],
-["سُلَحْفَاةٌ","Kura-kura"],["ضِفْدَعٌ","Katak"],["نَحْلَةٌ","Lebah"],["بَطَّةٌ","Bebek"],["حُوتٌ","Paus"]
-];
 
 function renderData(){
-let buahHTML="",hewanHTML="";
-
-let limit = premium ? 25 : 5;
-
-for(let i=0;i<limit;i++){
-buahHTML+=`<div class="word" onclick="speak('${buahData[i][0]}')">
-${buahData[i][0]} - ${buahData[i][1]}</div>`;
+  let buahHTML="",hewanHTML="";
+  let limit=premium?25:level*5;
+  if(limit>25)limit=25;
+  for(let i=0;i<limit;i++){
+    buahHTML+=`<div class="word" onclick="speak('${buahData[i][0]}')">${buahData[i][0]} - ${buahData[i][1]}</div>`;
+    hewanHTML+=`<div class="word" onclick="speak('${hewanData[i][0]}')">${hewanData[i][0]} - ${hewanData[i][1]}</div>`;
+  }
+  if(!premium){buahHTML+=`<div class="lock">🔒 20 Buah Terkunci</div>`;hewanHTML+=`<div class="lock">🔒 20 Hewan Terkunci</div>`;}
+  document.getElementById("buah").innerHTML=buahHTML;
+  document.getElementById("hewan").innerHTML=hewanHTML;
 }
-
-for(let i=0;i<limit;i++){
-hewanHTML+=`<div class="word" onclick="speak('${hewanData[i][0]}')">
-${hewanData[i][0]} - ${hewanData[i][1]}</div>`;
-}
-
-if(!premium){
-buahHTML+=`<div class="lock">🔒 20 Buah Terkunci</div>`;
-hewanHTML+=`<div class="lock">🔒 20 Hewan Terkunci</div>`;
-}
-
-document.getElementById("buah").innerHTML=buahHTML;
-document.getElementById("hewan").innerHTML=hewanHTML;
-}
-
-function
 renderData();
-let quizData=[...buahData,...hewanData];
-let questions=[],current=0,scoreQuiz=0;
 
-function startQuiz(){
-questions=[...quizData].sort(()=>Math.random()-0.5).slice(0,premium?10:5);
-current=0;
-scoreQuiz=0;
-nextQuestion();
+let quizData=[...buahData,...hewanData],questions=[],current=0,scoreQuiz=0;
+function startQuiz(){questions=[...quizData].sort(()=>Math.random()-0.5).slice(0,premium?10:5);current=0;scoreQuiz=0;nextQuestionInteractive();}
+function nextQuestionInteractive(){
+  if(current>=questions.length){document.getElementById("quizArea").innerHTML="🎉 Quiz Selesai!";document.getElementById("score").innerHTML="Skor: "+scoreQuiz+"/"+questions.length;return;}
+  let q=questions[current];speak(q[0]);
+  let options=[q[1]];while(options.length<4){let rand=quizData[Math.floor(Math.random()*quizData.length)][1];if(!options.includes(rand))options.push(rand);}
+  options.sort(()=>Math.random()-0.5);
+  let html="<h4>"+q[0]+"</h4>";options.forEach(o=>{html+=`<button onclick="checkAnswerInteractive(this,'${o}')">${o}</button>`;});document.getElementById("quizArea").innerHTML=html;
+}
+function checkAnswerInteractive(btn,ans){
+  if(ans===questions[current][1]){btn.style.backgroundColor="green";btn.style.color="white";scoreQuiz++;}else{btn.style.backgroundColor="red";btn.style.color="white";}
+  let btns=btn.parentNode.querySelectorAll("button");btns.forEach(b=>b.disabled=true);
+  current++;setTimeout(nextQuestionInteractive,800);
 }
 
-function nextQuestion(){
-if(current>=questions.length){
-document.getElementById("quizArea").innerHTML="🎉 Quiz Selesai!";
-document.getElementById("score").innerHTML=
-"Skor: "+scoreQuiz+"/"+questions.length;
-return;
-}
-
-let q=questions[current];
-speak(q[0]);
-
-let options=[q[1]];
-while(options.length<4){
-let rand=quizData[Math.floor(Math.random()*quizData.length)][1];
-if(!options.includes(rand)) options.push(rand);
-}
-options.sort(()=>Math.random()-0.5);
-
-let html="<h4>"+q[0]+"</h4>";
-options.forEach(o=>{
-html+=`<button onclick="checkAnswer('${o}')">${o}</button>`;
-});
-
-document.getElementById("quizArea").innerHTML=html;
-}
-
-function checkAnswer(ans){
-if(ans===questions[current][1]) scoreQuiz++;
-current++;
-nextQuestion();
-}
 function chat(){
-let input=document.getElementById("chatInput").value.trim().toLowerCase();
-let reply="عذراً، لم أفهم السؤال";
-
-if(!premium){
-reply="🔒 Chat Premium Terkunci";
-}else{
-
-if(input.startsWith("nama saya")){
-namaAnak=input.replace("nama saya","").trim();
-localStorage.setItem("namaAnak",namaAnak);
-reply="Senang bertemu denganmu "+namaAnak+" 😊";
+  let input=document.getElementById("chatInput").value.trim().toLowerCase();
+  let reply="عذراً، لم أفهم السؤال";
+  if(!premium){reply="🔒 Chat Premium Terkunci";}
+  else{
+    if(input.startsWith("nama saya")){namaAnak=input.replace("nama saya","").trim();localStorage.setItem("namaAnak",namaAnak);reply="Senang bertemu denganmu "+namaAnak+" 😊";}
+    else if(input.includes("السلام"))reply="وعليكم السلام ورحمة الله وبركاته "+(namaAnak||"sahabat")+" 💕";
+    else if(input.includes("كيف حالك"))reply="أنا بخير الحمد لله 😊";
+    else if(input.includes("الله"))reply="الله ربنا خالق كل شيء 🌙";
+    else if(input.includes("شكرا"))reply="عفواً 💖";
+  }
+  document.getElementById("chatBox").innerHTML="🤖 "+reply;
+  if(reply!=="عذراً، لم أفهم السؤال" && premium){stars++;if(stars>=5){level++;stars=0;alert("🎉 Naik Level "+level);renderData();}localStorage.setItem("stars",stars);localStorage.setItem("level",level);updateLevelUI();}
+  speak(reply);
 }
-
-else if(input.includes("السلام")){
-reply="وعليكم السلام ورحمة الله وبركاته "+(namaAnak||"sahabat")+" 💕";
-}
-
-else if(input.includes("كيف حالك")){
-reply="أنا بخير الحمد لله 😊";
-}
-
-else if(input.includes("الله")){
-reply="الله ربنا خالق كل شيء 🌙";
-}
-
-else if(input.includes("شكرا")){
-reply="عفواً 💖";
-}
-
-}
-
-document.getElementById("chatBox").innerHTML="🤖 "+reply;
-
-if(reply!=="عذراً، لم أفهم السؤال" && premium){
-stars++;
-if(stars>=5){
-level++;
-stars=0;
-alert("🎉 Naik Level "+level);
-}
-localStorage.setItem("stars",stars);
-localStorage.setItem("level",level);
-updateLevelUI();
-}
-
-speak(reply);
-}
-
 </script>
 </body>
 </html>
