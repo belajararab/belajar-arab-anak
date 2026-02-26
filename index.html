@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dunia Anak Sholeh - Belajar Arab Ceria</title>
+
+<style>
+body{
+  font-family: Arial;
+  text-align:center;
+  margin:0;
+  padding:15px;
+  background: linear-gradient(to bottom,#4FC3F7,#6EE7B7);
+  color:white;
+}
+
+h1{font-size:24px;}
+
+button{
+  background:#FF6FAE;
+  border:none;
+  padding:10px 18px;
+  margin:8px;
+  border-radius:15px;
+  font-size:15px;
+  color:white;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+  background:#FFD93D;
+  color:black;
+}
+
+.card{
+  background:white;
+  color:#333;
+  padding:15px;
+  margin:15px auto;
+  border-radius:20px;
+  width:95%;
+  max-width:500px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  animation:pop 0.4s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(0.8);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+
+.score{font-size:20px;font-weight:bold;margin-top:10px;}
+</style>
+</head>
+<body>
+
+<h1>🌙 Dunia Anak Sholeh</h1>
+<h2>📚 Belajar Arab Ceria</h2>
+
+<button onclick="startQuiz()">🎮 Mulai Quiz 75 Soal</button>
+
+<div id="quiz" class="card" style="display:none;">
+  <h3 id="question"></h3>
+  <div id="options"></div>
+  <div class="score" id="score"></div>
+</div>
+
+<audio id="benar" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
+<audio id="salah" src="https://actions.google.com/sounds/v1/cartoon/boing.ogg"></audio>
+
+<script>
+
+// ===== 75 DATA =====
+const data = [
+
+{ar:"تُفَّاحٌ",id:"Apel"},
+{ar:"مَوْزٌ",id:"Pisang"},
+{ar:"بُرْتُقَالٌ",id:"Jeruk"},
+{ar:"عِنَبٌ",id:"Anggur"},
+{ar:"فَرَاوِلَةٌ",id:"Stroberi"},
+{ar:"بَطِّيخٌ",id:"Semangka"},
+{ar:"شَمَّامٌ",id:"Melon"},
+{ar:"أَنَانَاسٌ",id:"Nanas"},
+{ar:"مَانْجَا",id:"Mangga"},
+{ar:"رُمَّانٌ",id:"Delima"},
+{ar:"كَرَزٌ",id:"Ceri"},
+{ar:"كِيوِي",id:"Kiwi"},
+{ar:"جَوَّافَةٌ",id:"Jambu"},
+{ar:"لَيْمُونٌ",id:"Lemon"},
+{ar:"تِينٌ",id:"Tin"},
+{ar:"خَوْخٌ",id:"Persik"},
+{ar:"كُمَّثْرَى",id:"Pir"},
+{ar:"جُوزُ الهِنْدِ",id:"Kelapa"},
+{ar:"تَمْرٌ",id:"Kurma"},
+{ar:"أُفُوكَادُو",id:"Alpukat"},
+{ar:"سَفَرْجَلٌ",id:"Quince"},
+{ar:"زَيْتُونٌ",id:"Zaitun"},
+{ar:"قِشْطَةٌ",id:"Srikaya"},
+{ar:"دُرَاعَةٌ",id:"Buah Naga"},
+{ar:"تَمَرْهِنْدِي",id:"Asam Jawa"},
+
+{ar:"قِطٌّ",id:"Kucing"},
+{ar:"كَلْبٌ",id:"Anjing"},
+{ar:"أَرْنَبٌ",id:"Kelinci"},
+{ar:"أَسَدٌ",id:"Singa"},
+{ar:"نَمِرٌ",id:"Harimau"},
+{ar:"فِيلٌ",id:"Gajah"},
+{ar:"زَرَافَةٌ",id:"Jerapah"},
+{ar:"قِرْدٌ",id:"Monyet"},
+{ar:"دِيكٌ",id:"Ayam Jantan"},
+{ar:"دَجَاجَةٌ",id:"Ayam Betina"},
+{ar:"بَقَرَةٌ",id:"Sapi"},
+{ar:"حِصَانٌ",id:"Kuda"},
+{ar:"خَرُوفٌ",id:"Domba"},
+{ar:"مَاعِزٌ",id:"Kambing"},
+{ar:"جَمَلٌ",id:"Unta"},
+{ar:"دُبٌّ",id:"Beruang"},
+{ar:"ذِئْبٌ",id:"Serigala"},
+{ar:"ثَعْلَبٌ",id:"Rubah"},
+{ar:"سَمَكٌ",id:"Ikan"},
+{ar:"طَائِرٌ",id:"Burung"},
+{ar:"بَطَّةٌ",id:"Bebek"},
+{ar:"نَحْلَةٌ",id:"Lebah"},
+{ar:"فَرَاشَةٌ",id:"Kupu-kupu"},
+{ar:"سُلَحْفَاةٌ",id:"Kura-kura"},
+{ar:"غَزَالٌ",id:"Rusa"},
+
+{ar:"مَا اسْمُكَ؟",id:"Siapa namamu?"},
+{ar:"كَيْفَ حَالُكَ؟",id:"Apa kabar?"},
+{ar:"كَمْ عُمْرُكَ؟",id:"Berapa umurmu?"},
+{ar:"أَيْنَ بَيْتُكَ؟",id:"Di mana rumahmu?"},
+{ar:"مَاذَا تُحِبُّ؟",id:"Apa yang kamu suka?"},
+{ar:"مَا هَذَا؟",id:"Ini apa?"},
+{ar:"مَاذَا تَفْعَلُ؟",id:"Apa yang kamu lakukan?"},
+{ar:"هَلْ أَنْتَ جَاهِزٌ؟",id:"Apakah kamu siap?"},
+{ar:"مِنْ أَيْنَ أَنْتَ؟",id:"Dari mana kamu?"},
+{ar:"مَتَى؟",id:"Kapan?"},
+{ar:"أَيْنَ؟",id:"Di mana?"},
+{ar:"لِمَاذَا؟",id:"Mengapa?"},
+{ar:"مَنْ؟",id:"Siapa?"},
+{ar:"كَيْفَ؟",id:"Bagaimana?"},
+{ar:"شُكْرًا",id:"Terima kasih"},
+{ar:"نَعَمْ",id:"Ya"},
+{ar:"لَا",id:"Tidak"},
+{ar:"اسْمِي",id:"Namaku"},
+{ar:"أَنَا بِخَيْرٍ",id:"Saya baik"},
+{ar:"عُمْرِي",id:"Umurku"},
+{ar:"بَيْتِي",id:"Rumahku"},
+{ar:"أُحِبُّ",id:"Saya suka"},
+{ar:"هَذَا",id:"Ini"},
+{ar:"أَدْرُسُ",id:"Saya belajar"},
+{ar:"أَنَا مِنْ",id:"Saya dari"}
+];
+
+let current = 0;
+let score = 0;
+
+function startQuiz(){
+  document.getElementById("quiz").style.display="block";
+  shuffle(data);
+  current = 0;
+  score = 0;
+  nextQuestion();
+}
+
+function nextQuestion(){
+  if(current >= data.length){
+    document.getElementById("question").innerHTML="🎉 Selesai!";
+    document.getElementById("options").innerHTML="";
+    document.getElementById("score").innerHTML="Skor Akhir: "+score+" / "+data.length;
+    return;
+  }
+
+  let q = data[current];
+  document.getElementById("question").innerHTML=q.ar;
+
+  let options = shuffle([
+    q.id,
+    data[Math.floor(Math.random()*data.length)].id,
+    data[Math.floor(Math.random()*data.length)].id
+  ]);
+
+  let html="";
+  options.forEach(o=>{
+    html+=`<button onclick="check('${o.replace(/'/g,"")}')">${o}</button>`;
+  });
+
+  document.getElementById("options").innerHTML=html;
+}
+
+function check(ans){
+  if(ans===data[current].id){
+    score++;
+    document.getElementById("benar").play();
+  }else{
+    document.getElementById("salah").play();
+  }
+  current++;
+  nextQuestion();
+}
+
+function shuffle(array){
+  return array.sort(()=>Math.random()-0.5);
+}
+
+// ===== PWA OFFLINE =====
+if ('serviceWorker' in navigator) {
+  const blob = new Blob([`
+    self.addEventListener('install', e=>{
+      e.waitUntil(
+        caches.open('arabapp').then(cache=>{
+          return cache.addAll(['./']);
+        })
+      );
+    });
+  `], {type: 'text/javascript'});
+
+  const swURL = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(swURL);
+}
+
+</script>
+
+</body>
+</html>
