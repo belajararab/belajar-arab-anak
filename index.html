@@ -3,38 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dunia Anak Sholeh - Arabika Smart</title>
+    <title>Dunia Anak Sholeh - Arabika Smart Pro</title>
     <style>
         :root { --primary: #2d6a4f; --secondary: #95d5b2; --accent: #FF6FAE; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 15px; background: linear-gradient(to bottom, #4FC3F7, #6EE7B7); color: white; text-align: center; min-height: 100vh; }
-        
-        .section { background: white; color: #333; margin: 20px auto; padding: 20px; border-radius: 25px; max-width: 500px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .section { background: white; color: #333; margin: 20px auto; padding: 20px; border-radius: 25px; max-width: 550px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
         .word-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-        .word { background: #FFD93D; padding: 10px 15px; border-radius: 15px; cursor: pointer; font-weight: bold; transition: transform 0.2s; border: 2px solid #F4D03F; font-size: 14px; }
-        
-        button { background: var(--accent); border: none; padding: 12px 20px; margin: 8px; border-radius: 15px; color: white; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
+        .word { background: #FFD93D; padding: 10px 15px; border-radius: 15px; cursor: pointer; font-weight: bold; border: 2px solid #F4D03F; font-size: 13px; min-width: 80px; }
+        button { background: var(--accent); border: none; padding: 12px 20px; margin: 8px; border-radius: 15px; color: white; cursor: pointer; font-weight: bold; transition: 0.3s; }
         button:hover { background: #FF4F81; }
-        
-        /* Avatar & Animation */
-        .avatar { width: 130px; height: 130px; margin: 20px auto; position: relative; cursor: pointer; }
-        .hijab { width: 130px; height: 130px; background: radial-gradient(circle at 40% 30%, #FFB6D9, #FF6FAE); border-radius: 50%; position: absolute; box-shadow: inset -5px -8px 15px rgba(0,0,0,0.2); }
-        .face { width: 95px; height: 95px; background: #FFE0BD; border-radius: 50%; position: absolute; top: 20px; left: 17px; box-shadow: inset -4px -6px 10px rgba(0,0,0,0.1); }
+        .avatar { width: 130px; height: 130px; margin: 20px auto; position: relative; }
+        .hijab { width: 130px; height: 130px; background: radial-gradient(circle at 40% 30%, #FFB6D9, #FF6FAE); border-radius: 50%; position: absolute; }
+        .face { width: 95px; height: 95px; background: #FFE0BD; border-radius: 50%; position: absolute; top: 20px; left: 17px; }
         .eye { width: 14px; height: 14px; background: black; border-radius: 50%; position: absolute; top: 45px; }
         .eye.left { left: 30px; } .eye.right { right: 30px; }
         .mouth { width: 35px; height: 15px; background: #FF4F81; border-radius: 0 0 35px 35px; position: absolute; bottom: 35px; left: 47px; transition: 0.2s; }
         .talk { height: 25px !important; border-radius: 50% !important; }
-
-        /* Voice Section */
         #output-container { background: #f1f8e9; border-radius: 15px; padding: 15px; margin: 15px 0; border: 2px solid var(--secondary); }
-        #output-text { font-size: 24px; color: var(--primary); font-weight: bold; direction: rtl; }
-        #translation-text { font-size: 14px; color: #555; margin-top: 5px; font-weight: 600; }
-        #tip-text { font-size: 11px; color: #e67e22; margin-top: 8px; font-style: italic; }
-        
-        .mic-btn { background: var(--primary); width: 70px; height: 70px; border-radius: 50%; font-size: 30px; margin: 10px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        #output-text { font-size: 20px; color: var(--primary); font-weight: bold; direction: rtl; }
+        .mic-btn { background: var(--primary); width: 80px; height: 80px; border-radius: 50%; font-size: 35px; margin: 10px auto; display: flex; align-items: center; justify-content: center; border:none; color:white; cursor:pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
         .listening { background: #e63946; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(230, 57, 70, 0); } 100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); } }
-
-        .levelbox { background: rgba(255,255,255,0.9); color: #FF6FAE; padding: 10px; border-radius: 20px; max-width: 250px; margin: 10px auto; font-weight: bold; border: 2px solid #FFD93D; }
+        .menu-dialog { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: left; font-size: 11px; margin-top: 10px; max-height: 200px; overflow-y: auto; padding-right: 5px; }
+        .dialog-item { background: #f9f9f9; padding: 8px; border-radius: 10px; border-left: 4px solid var(--primary); cursor: pointer; color: #333; }
         .mode-btn { padding: 8px 12px; border-radius: 15px; border: 2px solid var(--primary); background: white; color: var(--primary); cursor: pointer; font-size: 12px; font-weight: bold; }
         .mode-btn.active { background: var(--primary); color: white; }
     </style>
@@ -45,10 +36,10 @@
     <source src="https://actions.google.com/sounds/v1/ambiences/children_playing.ogg" type="audio/ogg">
 </audio>
 
-<div style="font-size:28px; font-weight:bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">🌙 Dunia Anak Sholeh</div>
-<div class="levelbox" id="levelBox">⭐ 0 | 🏆 Level 1</div>
+<div style="font-size:26px; font-weight:bold; margin-top:10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">🌙 Dunia Anak Sholeh</div>
+<div id="levelBox" style="margin:10px; font-weight:bold; background: white; color: var(--accent); display: inline-block; padding: 5px 15px; border-radius: 20px;">⭐ 0 | 🏆 Level 1</div>
 
-<div class="avatar" onclick="speak('أهلاً وسهلاً')">
+<div class="avatar" onclick="speak('أهلاً وسهلاً يا أصدقاء')">
     <div class="hijab"></div>
     <div class="face">
         <div class="eye left"></div>
@@ -65,35 +56,56 @@
     </div>
     <div id="output-container">
         <div id="output-text">...</div>
-        <div id="translation-text">Klik mic dan bicara</div>
-        <div id="tip-text"></div>
+        <div id="translation-text" style="font-weight: 600; color: #555;">Ketuk mic & Tanya Almira</div>
+        <div id="tip-text" style="font-size: 11px; color: #e67e22; margin-top: 5px;"></div>
     </div>
     <button id="start-mic" class="mic-btn" onclick="startRecognition()">🎙️</button>
-    <p id="guide-text" style="font-size: 11px; color: #888;">Ucapkan salam atau kata Arab.</p>
+    
+    <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+        <p style="font-weight: bold; font-size: 14px; margin-bottom: 5px; color:#333;">📜 Daftar Percakapan (Klik):</p>
+        <div class="menu-dialog" id="menu-dialog"></div>
+    </div>
 </div>
 
 <div class="section">
     <h3>🍎 Belajar Buah & Hewan</h3>
     <div class="word-grid" id="materi-list"></div>
+    <div id="lock-status" style="font-size: 12px; color: #d9534f; margin-top: 10px;"></div>
+</div>
+
+<div class="section">
+    <h3>👧 Kuis Pintar Almira</h3>
+    <div id="quiz-area">
+        <button onclick="startQuiz()">Mulai Kuis</button>
+    </div>
+    <div id="quiz-score" style="margin-top:10px; font-weight:bold; color:var(--accent);"></div>
 </div>
 
 <div class="section" style="background: #FFF9C4;">
-    <h3>🔓 Aktifkan Premium</h3>
-    <input type="password" id="kode" style="padding:10px; border-radius:10px; border:1px solid #ccc;" placeholder="Kode: ANAKSOLEH2026">
+    <h3>🔓 Aktifkan Semua Fitur</h3>
+    <input type="password" id="kode-premium" style="padding:10px; border-radius:10px; border:1px solid #ccc; width:60%;" placeholder="Kode: ANAKSOLEH2026">
     <button onclick="unlock()">Unlock</button>
-    <div id="status"></div>
 </div>
 
 <script>
-// DATA DATABASE (Gabungan)
-const database = {
-    "السلام عليكم": { id: "Assalamu'alaikum", response: "وعليكم السلام ورحمة الله وبركاته", tip: "Makhraj Sin (س) harus bersih." },
-    "كيف حالك": { id: "Apa kabar?", response: "أنا بخير والحمد لله", tip: "Huruf Kha (خ) parau." },
-    "tuffah": { id: "Apel", ar: "تفاح", tip: "Ha (ح) bersih di akhir." },
-    "kucing": { ar: "قطة", tip: "Qof (ق) tebal di pangkal lidah." },
-    "apel": { ar: "تفاح", tip: "Ha (ح) bersih." },
-    "pisang": { ar: "موز", tip: "Zai (ز) bergetar." },
-    "gajah": { ar: "فيل", tip: "Faa (ف) berhembus." }
+const buahData=[["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"],["بَطِّيخٌ","Semangka"],["أَنَانَاسٌ","Nanas"],["مَانْجَا","Mangga"],["كَرَزٌ","Ceri"],["خَوْخٌ","Persik"],["لَيْمُونٌ","Lemon"],["رُمَّانٌ","Delima"],["جَوَّافَةٌ","Jambu"],["تَمْرٌ","Kurma"],["كُمَّثْرَى","Pir"],["أُفُوكَادُو","Alpukat"],["تِينٌ","Tin"],["زَبِيبٌ","Kismis"],["جُوزُ الْهِنْدِ","Kelapa"],["بَابَايَا","Pepaya"],["كِيوِي","Kiwi"],["سَفَرْجَلٌ","Quince"],["جِرِيبْ فُرُوت","Grapefruit"],["لِيتْشِي","Leci"],["تَمَرْ هِنْدِي","Asam"]];
+const hewanData=[["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"],["بَقَرَةٌ","Sapi"],["حِصَانٌ","Kuda"],["دَجَاجَةٌ","Ayam"],["سَمَكَةٌ","Ikan"],["طَائِرٌ","Burung"],["قِرْدٌ","Monyet"],["نَمِرٌ","Harimau"],["زَرَافَةٌ","Jerapah"],["ذِئْبٌ","Serigala"],["دُبٌّ","Beruang"],["جَمَلٌ","Unta"],["غَنَمٌ","Kambing"],["حِمَارٌ","Keledai"],["فَأْرٌ","Tikus"],["ثُعْبَانٌ","Ular"],["سُلَحْفَاةٌ","Kura-kura"],["ضِفْدَعٌ","Katak"],["نَحْلَةٌ","Lebah"],["بَطَّةٌ","Bebek"],["حُوتٌ","Paus"]];
+
+const dialogDB = {
+    "اسمك": { q: "Mā ismuka?", a: "اسْمِي أَلْمِيرَا", t: "Nama saya Almira", tip: "Makhraj Alif tajam." },
+    "أين أنت": { q: "Min aina anta?", a: "أَنَا مِنْ إِنْدُونِيسِيَا", t: "Saya dari Indonesia", tip: "Huruf Nun sukun jelas." },
+    "حال": { q: "Kaifa hāluka?", a: "أَنَا بِخَيْرٍ وَالْحَمْدُ لِلَّه", t: "Saya baik, Alhamdulillah", tip: "Ha bersih." },
+    "تسكن": { q: "Aina taskunu?", a: "أَسْكُنُ فِي جَاكَرْتَا", t: "Saya tinggal di Jakarta", tip: "Sin bersih." },
+    "عمل": { q: "Mā ‘amaluka?", a: "أَنَا طَالِبَةٌ صَغِيرَة", t: "Saya seorang pelajar", tip: "Ain ditekan." },
+    "عمر": { q: "Kam ‘umruka?", a: "عُمْرِي تِسْعُ سَنَوَات", t: "Umur saya 9 tahun", tip: "Ain jelas." },
+    "تحب": { q: "Mādzā tuhibbu?", a: "أُحِبُّ الْقِرَاءَةَ وَالدِّرَاسَة", t: "Saya suka membaca", tip: "Ha bersih." },
+    "مسلم": { q: "Hal anta muslim?", a: "نَعَمْ، أَنَا مُسْلِمَةٌ", t: "Ya, saya muslimah", tip: "Sin mendesis." },
+    "تستيقظ": { q: "Matā tastaiqizhu?", a: "أَسْتَيْقِظُ صَبَاحًا بَاكِرًا", t: "Saya bangun pagi", tip: "Zho tebal." },
+    "أبوك": { q: "Aina abūka?", a: "أَبِي فِي الْبَيْتِ الآن", t: "Ayah saya di rumah", tip: "Ba mantap." },
+    "kucing": { ar: "قِطٌّ", tip: "Qof tebal." },
+    "anjing": { ar: "كَلْبٌ", tip: "Kaf tipis." },
+    "apel": { ar: "تُفَّاحٌ", tip: "Ha bersih." },
+    "pisang": { ar: "مَوْزٌ", tip: "Zai bergetar." }
 };
 
 let premium = localStorage.getItem("premium") === "true";
@@ -101,106 +113,116 @@ let level = parseInt(localStorage.getItem("level")) || 1;
 let stars = parseInt(localStorage.getItem("stars")) || 0;
 let currentMode = 'ar-SA';
 
-// Speech Engine
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const recognition = new SpeechRecognition();
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 
 function setMode(mode) {
     currentMode = mode;
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-    if(mode === 'ar-SA') {
-        document.getElementById('mode-ar').classList.add('active');
-        document.getElementById('guide-text').innerText = "Ucapkan Salam atau kata Arab.";
-    } else {
-        document.getElementById('mode-id').classList.add('active');
-        document.getElementById('guide-text').innerText = "Sebut nama buah/hewan dalam Bahasa Indonesia.";
-    }
+    document.getElementById(mode === 'ar-SA' ? 'mode-ar' : 'mode-id').classList.add('active');
 }
 
 function startRecognition() {
     recognition.lang = currentMode;
     recognition.start();
     document.getElementById('start-mic').classList.add('listening');
-    document.getElementById('translation-text').innerText = "Mendengarkan...";
     document.getElementById('bgMusic').play().catch(e=>{});
 }
 
 recognition.onresult = (event) => {
-    const result = event.results[0][0].transcript.toLowerCase();
-    document.getElementById('output-text').innerText = result;
+    const speech = event.results[0][0].transcript.toLowerCase();
+    document.getElementById('output-text').innerText = speech;
     document.getElementById('start-mic').classList.remove('listening');
     
     let found = false;
-    for (let key in database) {
-        if (result.includes(key)) {
-            const data = database[key];
-            if (currentMode === 'id-ID') {
+    for (let key in dialogDB) {
+        if (speech.includes(key.toLowerCase())) {
+            const data = dialogDB[key];
+            if(currentMode === 'id-ID') {
                 document.getElementById('output-text').innerText = data.ar;
-                document.getElementById('translation-text').innerText = "Bahasa Arab: " + data.ar;
                 speak(data.ar);
             } else {
-                document.getElementById('translation-text').innerText = "Arti: " + (data.id || "Ditemukan");
-                setTimeout(() => speak(data.response || data.ar), 500);
+                document.getElementById('translation-text').innerText = data.t;
+                speak(data.a);
             }
             document.getElementById('tip-text').innerText = "💡 Tips: " + data.tip;
-            found = true;
-            stars++; checkLevelUp();
-            break;
+            found = true; stars++; checkLevelUp(); break;
         }
     }
-    if (!found) {
-        document.getElementById('translation-text').innerText = "Kata belum ada di modul.";
-        document.getElementById('tip-text').innerText = "";
-    }
-};
-
-recognition.onspeechend = () => {
-    recognition.stop();
-    document.getElementById('start-mic').classList.remove('listening');
+    if(!found) document.getElementById('translation-text').innerText = "Maaf, coba lagi ya.";
 };
 
 function speak(text){
     window.speechSynthesis.cancel();
     let u = new SpeechSynthesisUtterance(text);
-    u.lang = "ar-SA";
-    u.rate = 0.8;
+    u.lang = "ar-SA"; u.rate = 0.8;
     document.getElementById("mouth").classList.add("talk");
     u.onend = () => document.getElementById("mouth").classList.remove("talk");
     window.speechSynthesis.speak(u);
 }
 
-function checkLevelUp(){
-    if(stars >= 10){
-        level++; stars = 0;
-        alert("Barakallah! Naik ke Level " + level);
-        renderMateri();
+function renderMateri(){
+    let html = "";
+    let limit = premium ? 25 : (level * 5);
+    if(limit > 25) limit = 25;
+    for(let i=0; i<limit; i++){
+        html += `<div class="word" onclick="speak('${buahData[i][0]}')">${buahData[i][0]}<br><small>${buahData[i][1]}</small></div>`;
+        html += `<div class="word" onclick="speak('${hewanData[i][0]}')">${hewanData[i][0]}<br><small>${hewanData[i][1]}</small></div>`;
     }
-    localStorage.setItem("stars", stars);
-    localStorage.setItem("level", level);
-    document.getElementById("levelBox").innerHTML="⭐ "+stars+" | 🏆 Level "+level;
+    document.getElementById("materi-list").innerHTML = html;
+    document.getElementById("lock-status").innerText = premium ? "✅ Semua Terbuka" : `🔒 Level ${level}: ${limit*2}/50 Materi Terbuka.`;
 }
 
-function renderMateri(){
-    const data = [["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["قِطٌّ","Kucing"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"]];
-    let html = "";
-    let limit = premium ? data.length : 3;
-    for(let i=0; i<limit; i++){
-        html += `<div class="word" onclick="speak('${data[i][0]}')">${data[i][0]}<br><small>${data[i][1]}</small></div>`;
+let qData = [...buahData, ...hewanData], currentQ=0, qScore=0, activeQs=[];
+function startQuiz(){
+    activeQs = [...qData].sort(()=>Math.random()-0.5).slice(0, 5);
+    currentQ = 0; qScore = 0; showQuestion();
+}
+
+function showQuestion(){
+    if(currentQ >= activeQs.length){
+        document.getElementById('quiz-area').innerHTML = `<button onclick="startQuiz()">Ulangi Kuis</button>`;
+        document.getElementById('quiz-score').innerText = `Skor: ${qScore}/5`;
+        if(qScore === 5) { stars += 5; checkLevelUp(); }
+        return;
     }
-    if(!premium) html += `<div style="font-size:12px; color:red; width:100%;">Materi lainnya terkunci 🔒</div>`;
-    document.getElementById("materi-list").innerHTML = html;
+    let q = activeQs[currentQ];
+    speak(q[0]);
+    let opts = [q[1]];
+    while(opts.length < 4){
+        let r = qData[Math.floor(Math.random()*qData.length)][1];
+        if(!opts.includes(r)) opts.push(r);
+    }
+    opts.sort(()=>Math.random()-0.5);
+    let h = `<h4>Apa arti dari: ${q[0]}?</h4>`;
+    opts.forEach(o => h += `<button onclick="checkAns(this, '${o}', '${q[1]}')">${o}</button>`);
+    document.getElementById('quiz-area').innerHTML = h;
+}
+
+function checkAns(btn, sel, cor){
+    if(sel === cor) { btn.style.background="#4CAF50"; qScore++; }
+    else btn.style.background="#F44336";
+    currentQ++; setTimeout(showQuestion, 1000);
+}
+
+function checkLevelUp(){
+    if(stars >= 10){ level++; stars = 0; alert("Naik Level " + level); renderMateri(); }
+    localStorage.setItem("stars", stars); localStorage.setItem("level", level);
+    document.getElementById("levelBox").innerText = `⭐ ${stars} | 🏆 Level ${level}`;
 }
 
 function unlock(){
-    if(document.getElementById("kode").value === "ANAKSOLEH2026"){
-        premium = true;
-        localStorage.setItem("premium", "true");
-        document.getElementById("status").innerText = "✅ Berhasil!";
-        renderMateri();
+    if(document.getElementById("kode-premium").value === "ANAKSOLEH2026"){
+        premium = true; localStorage.setItem("premium", "true"); renderMateri();
     }
 }
 
-// Start
+// RENDER DIALOG MENU
+let menuHtml = "";
+for (let key in dialogDB) {
+    if(dialogDB[key].q) menuHtml += `<div class="dialog-item" onclick="speak('${dialogDB[key].a}');"><strong>${dialogDB[key].q}</strong><br>${dialogDB[key].a}</div>`;
+}
+document.getElementById('menu-dialog').innerHTML = menuHtml;
+
 renderMateri();
 </script>
 </body>
