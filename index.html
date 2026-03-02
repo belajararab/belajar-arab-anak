@@ -254,5 +254,195 @@ speak(result);
 recognition.onspeechend=()=>recognition.stop();
 
 </script>
+  <script>
+
+/* ================= AVATAR SPEAK (SUARA ARAB) ================= */
+function speak(text){
+  let u = new SpeechSynthesisUtterance(text);
+  u.lang = "ar-SA"; // suara Arab
+
+  let avatar = document.getElementById("avatarImg");
+  if(avatar){
+    avatar.classList.add("talk");
+    u.onend = function(){
+      avatar.classList.remove("talk");
+    }
+  }
+
+  speechSynthesis.speak(u);
+}
+
+/* ================= SISTEM LEVEL ================= */
+let xp = 0;
+let levelAI = 1;
+
+function updateLevel(){
+  if(xp >= levelAI * 5){
+    levelAI++;
+    speak("ما شاء الله لقد ارتفع مستواك");
+  }
+  document.getElementById("status-ar").innerText =
+    "Level AI: " + levelAI + " | XP: " + xp;
+}
+
+/* ================= DATABASE INDONESIA ➜ JAWAB ARAB ================= */
+
+const qaDatabase = [
+
+{keys:["assalamualaikum"], 
+ ans:"وعليكم السلام ورحمة الله وبركاته"},
+
+{keys:["apa kabar"], 
+ ans:"أنا بخير الحمد لله"},
+
+{keys:["siapa allah"], 
+ ans:"الله هو ربنا خالق كل شيء"},
+
+{keys:["siapa nabi"], 
+ ans:"نبينا هو محمد صلى الله عليه وسلم"},
+
+{keys:["berapa rukun islam"], 
+ ans:"أركان الإسلام خمسة"},
+
+{keys:["berapa rukun iman"], 
+ ans:"أركان الإيمان ستة"},
+
+{keys:["apa itu sholat"], 
+ ans:"الصلاة عبادة واجبة خمس مرات في اليوم"},
+
+{keys:["apa itu puasa"], 
+ ans:"الصوم هو الإمساك عن الطعام والشراب من الفجر إلى المغرب"},
+
+{keys:["apa itu zakat"], 
+ ans:"الزكاة هي إخراج المال للمحتاجين"},
+
+{keys:["siapa kamu"], 
+ ans:"أنا أرابيكا صديقتك في التعلم"},
+
+{keys:["terima kasih"], 
+ ans:"عفوا بارك الله فيك"}
+
+];
+
+/* ================= DATABASE HAFALAN 10 DOA ================= */
+
+const doaList = [
+
+{ nama:"Doa Sebelum Makan", 
+  teks:"bismillah" },
+
+{ nama:"Doa Sesudah Makan", 
+  teks:"alhamdulillahilladzi at amana wa saqona wa ja alana minal muslimin" },
+
+{ nama:"Doa Sebelum Tidur", 
+  teks:"bismika allahumma ahya wa amut" },
+
+{ nama:"Doa Bangun Tidur", 
+  teks:"alhamdulillahilladzi ahyana bada ma amatana wa ilaihin nusyur" },
+
+{ nama:"Doa Masuk Kamar Mandi", 
+  teks:"allahumma inni audzubika minal khubutsi wal khoba its" },
+
+{ nama:"Doa Keluar Kamar Mandi", 
+  teks:"ghufranaka alhamdulillahilladzi adzhaba annil adza wa afani" },
+
+{ nama:"Doa Masuk Rumah", 
+  teks:"allahumma inni asaluka khairal mauliji wa khairal makhroji" },
+
+{ nama:"Doa Keluar Rumah", 
+  teks:"bismillahi tawakkaltu alallah la haula wala quwwata illa billah" },
+
+{ nama:"Doa Naik Kendaraan", 
+  teks:"subhanalladzi sakhoro lana hadza wa ma kunna lahu muqrinin" },
+
+{ nama:"Doa Sebelum Belajar", 
+  teks:"rabbi zidni ilma warzuqni fahma" }
+
+];
+
+let currentDoa = null;
+
+/* ================= MODE HAFALAN ================= */
+
+function mulaiHafalan(){
+  let randomIndex = Math.floor(Math.random() * doaList.length);
+  currentDoa = doaList[randomIndex];
+
+  document.getElementById("translation").innerText =
+    "Silakan baca: " + currentDoa.nama;
+
+  speak("إقرأ " + currentDoa.nama);
+}
+
+function cekHafalan(text){
+  if(!currentDoa) return;
+
+  let jawaban = text.toLowerCase();
+  let target = currentDoa.teks.toLowerCase();
+
+  if(jawaban.includes(target.substring(0,10))){
+    xp += 2;
+    updateLevel();
+    document.getElementById("translation").innerText =
+      "Masya Allah, hafalan benar!";
+    speak("ما شاء الله حفظك صحيح");
+  }else{
+    document.getElementById("translation").innerText =
+      "Coba lagi ya";
+    speak("حاول مرة أخرى");
+  }
+
+  currentDoa = null;
+}
+
+/* ================= MIC SYSTEM ================= */
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+
+recognition.lang = "id-ID"; // anak tetap ngomong Indonesia
+recognition.continuous = false;
+
+document.getElementById("start-btn").onclick = function(){
+  recognition.start();
+  document.getElementById("status-ar").innerText = "Mendengarkan...";
+};
+
+recognition.onresult = function(event){
+
+  let result = event.results[0][0].transcript.toLowerCase();
+  document.getElementById("output").innerText = result;
+
+  if(currentDoa){
+    cekHafalan(result);
+    return;
+  }
+
+  let foundAnswer = "ما شاء الله سؤالك جميل";
+  let matched = false;
+
+  for(let i=0;i<qaDatabase.length;i++){
+    for(let j=0;j<qaDatabase[i].keys.length;j++){
+      if(result.includes(qaDatabase[i].keys[j])){
+        foundAnswer = qaDatabase[i].ans;
+        matched = true;
+      }
+    }
+  }
+
+  if(matched){
+    xp++;
+    updateLevel();
+  }
+
+  document.getElementById("translation").innerText = foundAnswer;
+  speak(foundAnswer);
+};
+
+recognition.onspeechend = function(){
+  recognition.stop();
+};
+
+</script>
 </body>
 </html>
