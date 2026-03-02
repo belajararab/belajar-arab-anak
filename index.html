@@ -3,26 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dunia Anak Sholeh Super App</title>
+<title>Dunia Anak Sholeh Super AI</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 body{
-  font-family: Arial;
+  font-family:'Poppins',sans-serif;
   margin:0;
   padding:15px;
-  background: linear-gradient(to bottom,#4FC3F7,#6EE7B7);
-  color:white;
+  background:linear-gradient(to bottom,#4FC3F7,#6EE7B7);
   text-align:center;
-}
-
-/* ===== AVATAR FOTO ===== */
-.avatar{
-  width:150px;
-  height:150px;
-  margin:20px auto;
-  position:relative;
+  color:white;
 }
 
 .avatar img{
@@ -32,12 +24,11 @@ body{
   object-fit:cover;
   border:5px solid #FF6FAE;
   box-shadow:0 5px 20px rgba(0,0,0,0.3);
-  transition:0.2s;
+  transition:0.3s;
 }
 
-/* Efek saat bicara */
 .talk{
-  animation: glow 0.5s infinite alternate;
+  animation:glow 0.5s infinite alternate;
 }
 
 @keyframes glow{
@@ -45,15 +36,13 @@ body{
   to{box-shadow:0 0 30px #ff1493;}
 }
 
-/* ===== CARD UMUM ===== */
-.section{
+.section,.arabika-card{
   background:white;
   color:#333;
   margin:20px auto;
   padding:15px;
   border-radius:20px;
   max-width:500px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
 
 .word{
@@ -67,17 +56,18 @@ body{
 button{
   background:#FF6FAE;
   border:none;
-  padding:10px 15px;
+  padding:8px 14px;
   margin:6px;
   border-radius:12px;
   color:white;
   cursor:pointer;
 }
 
-input{
-  padding:8px;
-  border-radius:10px;
-  border:1px solid #ccc;
+.mic-btn{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  font-size:28px;
 }
 
 .levelbox{
@@ -89,392 +79,278 @@ input{
   margin:10px auto;
   font-weight:bold;
 }
-
-/* ===== ARABIKA STYLE ===== */
-.arabika-card{
-  font-family:'Poppins',sans-serif;
-  background:white;
-  color:#333;
-  border-radius:30px;
-  padding:20px;
-  max-width:450px;
-  margin:30px auto;
-  box-shadow:0 20px 40px rgba(0,0,0,0.1);
-}
-
-.mode-btn{
-  padding:8px 15px;
-  border-radius:20px;
-  border:2px solid #2d6a4f;
-  background:transparent;
-  cursor:pointer;
-  font-size:12px;
-  font-weight:bold;
-  color:#2d6a4f;
-}
-
-.mode-btn.active{
-  background:#2d6a4f;
-  color:white;
-}
-
-.mic-btn{
-  background:#2d6a4f;
-  color:white;
-  border:none;
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  font-size:30px;
-  cursor:pointer;
-}
 </style>
 </head>
 
 <body>
 
 <h2>🌙 Dunia Anak Sholeh</h2>
-<p>Belajar Arab Ceria Anak Muslim</p>
 
-<!-- AVATAR FOTO -->
 <div class="avatar">
-  <img id="avatarImg" src="https://www.dropbox.com/scl/fi/isjmai97h2zzojhksgkrq/1000376495.jpg?rlkey=tu6gf34mdj9q09qg9ga3jqvgp&raw=1">
+<img id="avatarImg" src="https://www.dropbox.com/scl/fi/isjmai97h2zzojhksgkrq/1000376495.jpg?raw=1">
 </div>
 
 <div id="levelBox" class="levelbox"></div>
 
 <div class="section">
 <h3>🔓 Aktifkan Premium</h3>
-<input type="password" id="kode" placeholder="Masukkan kode">
+<input type="password" id="kode">
 <button onclick="unlock()">Unlock</button>
 <div id="status"></div>
 </div>
 
 <div class="section">
-<h3>🍎 Belajar Buah</h3>
+<h3>🍎 Buah & Hewan</h3>
 <div id="buah"></div>
-</div>
-
-<div class="section">
-<h3>🐰 Belajar Hewan</h3>
 <div id="hewan"></div>
 </div>
 
 <div class="section">
-<h3>👧 Quiz</h3>
-<button onclick="startQuiz()">Mulai Quiz</button>
-<div id="quizArea"></div>
-<div id="score"></div>
+<h3>📖 Hafalan Doa</h3>
+<button onclick="mulaiHafalan()">Mulai Hafalan</button>
+<div id="hafalanStatus"></div>
 </div>
 
 <div class="arabika-card">
-<h3>🕌 ARABIKA - Kamus Suara</h3>
-
-<div>
-<button id="mode-ar" class="mode-btn active">Bicara Arab</button>
-<button id="mode-id" class="mode-btn">Sebut Indo</button>
-</div>
-
-<p id="status-ar">Ketuk mic untuk mulai</p>
-<div id="output" style="font-size:22px;direction:rtl;"></div>
-<div id="translation"></div>
-
-<button id="start-btn" class="mic-btn">🎙️</button>
-</div>
-<div id="status-ar"></div>
+<h3>🕌 ARABIKA SUPER AI</h3>
+<p id="status-ar">Tekan mic untuk bicara</p>
 <div id="output"></div>
 <div id="translation"></div>
+<button id="start-btn" class="mic-btn">🎙️</button>
+</div>
+
 <script>
 
-/* ===== DATA ===== */
+/* ================= STATE ================= */
 
 let premium=false;
+let xp=0;
 let level=1;
-let stars=0;
+let currentDoa=null;
 
-function updateLevelUI(){
-document.getElementById("levelBox").innerHTML="⭐ "+stars+" | 🏆 Level "+level;
+/* ================= LEVEL ================= */
+
+function updateLevel(){
+  if(xp>=level*5){
+    level++;
+    speak("ما شاء الله لقد ارتفع مستواك");
+  }
+  document.getElementById("levelBox").innerHTML=
+  "⭐ XP "+xp+" | 🏆 Level "+level;
 }
-updateLevelUI();
+updateLevel();
+
+/* ================= PREMIUM ================= */
 
 function unlock(){
-if(document.getElementById("kode").value==="ANAKSOLEH2026"){
-premium=true;
-document.getElementById("status").innerHTML="✅ Premium Aktif!";
+  if(document.getElementById("kode").value==="ANAKSOLEH2026"){
+    premium=true;
+    document.getElementById("status").innerHTML="✅ Premium Aktif!";
+  }
 }
-}
+
+/* ================= SPEAK ================= */
 
 function speak(text){
-let u=new SpeechSynthesisUtterance(text);
-u.lang="ar-SA";
-
-let avatar=document.getElementById("avatarImg");
-avatar.classList.add("talk");
-
-u.onend=function(){
-avatar.classList.remove("talk");
+  let u=new SpeechSynthesisUtterance(text);
+  u.lang="ar-SA";
+  let avatar=document.getElementById("avatarImg");
+  avatar.classList.add("talk");
+  u.onend=()=>avatar.classList.remove("talk");
+  speechSynthesis.speak(u);
 }
 
-speechSynthesis.speak(u);
-}
+/* ================= DATA ================= */
 
-const buahData=[["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"],["بَطِّيخٌ","Semangka"],["أَنَانَاسٌ","Nanas"],["مَانْجَا","Mangga"],["كَرَزٌ","Ceri"],["خَوْخٌ","Persik"],["لَيْمُونٌ","Lemon"],["رُمَّانٌ","Delima"],["جَوَّافَةٌ","Jambu"],["تَمْرٌ","Kurma"],["كُمَّثْرَى","Pir"],["أُفُوكَادُو","Alpukat"],["تِينٌ","Tin"],["زَبِيبٌ","Kismis"],["جُوزُ الْهِنْدِ","Kelapa"],["بَابَايَا","Pepaya"],["كِيوِي","Kiwi"],["سَفَرْجَلٌ","Quince"],["جِرِيبْ فُرُوت","Grapefruit"],["لِيتْشِي","Leci"],["تَمَرْ هِنْدِي","Asam"]];
-const hewanData=[["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"],["بَقَرَةٌ","Sapi"],["حِصَانٌ","Kuda"],["دَجَاجَةٌ","Ayam"],["سَمَكَةٌ","Ikan"],["طَائِرٌ","Burung"],["قِرْدٌ","Monyet"],["نَمِرٌ","Harimau"],["زَرَافَةٌ","Jerapah"],["ذِئْبٌ","Serigala"],["دُبٌّ","Beruang"],["جَمَلٌ","Unta"],["غَنَمٌ","Kambing"],["حِمَارٌ","Keledai"],["فَأْرٌ","Tikus"],["ثُعْبَانٌ","Ular"],["سُلَحْفَاةٌ","Kura-kura"],["ضِفْدَعٌ","Katak"],["نَحْلَةٌ","Lebah"],["بَطَّةٌ","Bebek"],["حُوتٌ","Paus"]];
+const buahData=[
+["تُفَّاحٌ","Apel"],
+["مَوْزٌ","Pisang"],
+["بُرْتُقَالٌ","Jeruk"],
+["عِنَبٌ","Anggur"],
+["فَرَاوِلَةٌ","Stroberi"],
+["مَانْجُو","Mangga"],
+["بَابَايَا","Pepaya"],
+["أَنَانَاس","Nanas"],
+["بِطِّيخ","Semangka"],
+["شَمَّام","Melon"],
+["رُمَّان","Delima"],
+["كُمَّثْرَى","Pir"],
+["خَوْخ","Persik"],
+["مِشْمِش","Aprikot"],
+["كِيوِي","Kiwi"],
+["جَوَافَة","Jambu"],
+["لَيْمُون","Lemon"],
+["جُوزُ الْهِنْد","Kelapa"],
+["تَمْر","Kurma"],
+["تِين","Tin"],
+["أَفُوكَادُو","Alpukat"],
+["كَرَز","Ceri"],
+["تُوت","Beri"],
+["دُرِيَان","Durian"],
+["سَلَك","Salak"]
+];
+
+
+const hewanData=[
+["قِطٌّ","Kucing"],
+["كَلْبٌ","Anjing"],
+["أَرْنَبٌ","Kelinci"],
+["فِيلٌ","Gajah"],
+["أَسَدٌ","Singa"],
+["نَمِر","Harimau"],
+["زَرَافَة","Jerapah"],
+["قِرْد","Monyet"],
+["حِصَان","Kuda"],
+["بَقَرَة","Sapi"],
+["غَنَم","Kambing"],
+["دَجَاجَة","Ayam"],
+["بَطَّة","Bebek"],
+["سَمَكَة","Ikan"],
+["سُلَحْفَاة","Kura-kura"],
+["تِمْسَاح","Buaya"],
+["ذِئْب","Serigala"],
+["ثَعْلَب","Rubah"],
+["دُبّ","Beruang"],
+["حِمَار","Keledai"],
+["غُزَال","Rusa"],
+["خُفَّاش","Kelelawar"],
+["نَحْلَة","Lebah"],
+["فَرَاشَة","Kupu-kupu"],
+["نَمْلَة","Semut"]
+];
+
 
 function renderData(){
-let buahHTML="",hewanHTML="";
-for(let i=0;i<buahData.length;i++){
-buahHTML+=`<div class="word" onclick="speak('${buahData[i][0]}')">${buahData[i][0]} - ${buahData[i][1]}</div>`;
-hewanHTML+=`<div class="word" onclick="speak('${hewanData[i][0]}')">${hewanData[i][0]} - ${hewanData[i][1]}</div>`;
-}
+let buahHTML="";
+let hewanHTML="";
+
+buahData.forEach(b=>{
+buahHTML+=`<div class="word" onclick="speak('${b[0]}')">${b[0]} - ${b[1]}</div>`;
+});
+
+hewanData.forEach(h=>{
+hewanHTML+=`<div class="word" onclick="speak('${h[0]}')">${h[0]} - ${h[1]}</div>`;
+});
+
 document.getElementById("buah").innerHTML=buahHTML;
 document.getElementById("hewan").innerHTML=hewanHTML;
 }
 renderData();
 
-/* ===== ARABIKA ===== */
+/* ================= QA RANDOM ================= */
 
-let currentMode="ar-SA";
-document.getElementById("mode-ar").onclick=()=>currentMode="ar-SA";
-document.getElementById("mode-id").onclick=()=>currentMode="id-ID";
+const qaDatabase=[
+
+{keys:["assalamualaikum"],
+ answers:[
+ "وعليكم السلام ورحمة الله وبركاته",
+ "وعليكم السلام أهلا وسهلا",
+ "وعليكم السلام يا صديقي"
+ ]},
+
+{keys:["apa kabar"],
+ answers:[
+ "أنا بخير الحمد لله",
+ "الحمد لله أنا سعيد اليوم",
+ "أنا بخير كيف حالك أنت"
+ ]},
+
+{keys:["siapa kamu"],
+ answers:[
+ "أنا أرابيكا صديقتك في التعلم",
+ "أنا مساعدتك لتعلم اللغة العربية",
+ "أنا هنا لأساعدك يا بطل"
+ ]},
+
+{keys:["siapa allah"],
+ answers:[
+ "الله هو ربنا خالق كل شيء",
+ "الله هو الخالق العظيم",
+ "الله رب العالمين"
+ ]},
+
+{keys:["siapa nabi"],
+ answers:[
+ "نبينا هو محمد صلى الله عليه وسلم",
+ "محمد صلى الله عليه وسلم هو رسول الله",
+ "هو خاتم الأنبياء"
+ ]},
+
+{keys:["terima kasih"],
+ answers:[
+ "عفوا بارك الله فيك",
+ "لا شكر على واجب",
+ "جزاك الله خيرا"
+ ]}
+];
+
+/* ================= DOA ================= */
+
+const doaList=[
+{nama:"Doa Sebelum Makan",teks:"bismillah"},
+{nama:"Doa Sesudah Makan",teks:"alhamdulillahilladzi"},
+{nama:"Doa Sebelum Tidur",teks:"bismika allahumma"},
+{nama:"Doa Bangun Tidur",teks:"alhamdulillahilladzi ahyana"},
+{nama:"Doa Masuk Rumah",teks:"allahumma inni"},
+{nama:"Doa Keluar Rumah",teks:"bismillahi tawakkaltu"}
+];
+
+function mulaiHafalan(){
+let r=Math.floor(Math.random()*doaList.length);
+currentDoa=doaList[r];
+document.getElementById("hafalanStatus").innerText=
+"Silakan baca: "+currentDoa.nama;
+speak("إقرأ "+currentDoa.nama);
+}
+
+/* ================= MIC ================= */
 
 const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
 const recognition=new SpeechRecognition();
+recognition.lang="id-ID";
 
 document.getElementById("start-btn").onclick=()=>{
-recognition.lang=currentMode;
 recognition.start();
 document.getElementById("status-ar").innerText="Mendengarkan...";
 };
 
-/* ================= DATABASE INDONESIA ➜ ARAB ================= */
+recognition.onresult=(e)=>{
+let result=e.results[0][0].transcript.toLowerCase();
+document.getElementById("output").innerText=result;
 
-const qaDatabase = [
+if(currentDoa){
+if(result.includes(currentDoa.teks)){
+xp+=2; updateLevel();
+speak("ما شاء الله حفظك صحيح");
+}else{
+speak("حاول مرة أخرى");
+}
+currentDoa=null;
+return;
+}
 
-{keys:["assalamualaikum"], ans:"وعليكم السلام ورحمة الله وبركاته"},
-{keys:["apa kabar"], ans:"أنا بخير الحمد لله"},
-{keys:["siapa allah"], ans:"الله هو ربنا خالق كل شيء"},
-{keys:["siapa nabi"], ans:"نبينا هو محمد صلى الله عليه وسلم"},
-{keys:["berapa rukun islam"], ans:"أركان الإسلام خمسة"},
-{keys:["berapa rukun iman"], ans:"أركان الإيمان ستة"},
-{keys:["apa itu sholat"], ans:"الصلاة عبادة واجبة خمس مرات في اليوم"},
-{keys:["apa itu puasa"], ans:"الصوم هو الإمساك عن الطعام والشراب من الفجر إلى المغرب"},
-{keys:["siapa kamu"], ans:"أنا أرابيكا صديقتك في التعلم"},
-{keys:["terima kasih"], ans:"عفوا بارك الله فيك"}
+let jawab="ما شاء الله سؤالك جميل";
+let match=false;
 
-];
+qaDatabase.forEach(q=>{
+q.keys.forEach(k=>{
+if(result.includes(k)){
+let randomIndex=Math.floor(Math.random()*q.answers.length);
+jawab=q.answers[randomIndex];
+match=true;
+}
+});
+});
 
+if(match){
+xp++; updateLevel();
+}
 
-/* ================= RESPONSE SYSTEM ================= */
-
-
-
-  let foundAnswer = "ما شاء الله سؤال جميل";
-  let matched = false;
-
-  for(let i=0;i<qaDatabase.length;i++){
-    for(let j=0;j<qaDatabase[i].keys.length;j++){
-      if(result.includes(qaDatabase[i].keys[j])){
-        foundAnswer = qaDatabase[i].ans;
-        matched = true;
-      }
-    }
-  }
-
-  document.getElementById("translation").innerText = foundAnswer;
-  speak(foundAnswer);
+document.getElementById("translation").innerText=jawab;
+speak(jawab);
 };
 
 recognition.onspeechend=()=>recognition.stop();
-
-</script>
-
-/* ================= AVATAR SPEAK (SUARA ARAB) ================= */
-function speak(text){
-  let u = new SpeechSynthesisUtterance(text);
-  u.lang = "ar-SA"; // suara Arab
-
-  let avatar = document.getElementById("avatarImg");
-  if(avatar){
-    avatar.classList.add("talk");
-    u.onend = function(){
-      avatar.classList.remove("talk");
-    }
-  }
-
-  speechSynthesis.speak(u);
-}
-
-/* ================= SISTEM LEVEL ================= */
-let xp = 0;
-let levelAI = 1;
-
-function updateLevel(){
-  if(xp >= levelAI * 5){
-    levelAI++;
-    speak("ما شاء الله لقد ارتفع مستواك");
-  }
-  document.getElementById("status-ar").innerText =
-    "Level AI: " + levelAI + " | XP: " + xp;
-}
-
-/* ================= DATABASE INDONESIA ➜ JAWAB ARAB ================= */
-
-const qaDatabase = [
-
-{keys:["assalamualaikum"], 
- ans:"وعليكم السلام ورحمة الله وبركاته"},
-
-{keys:["apa kabar"], 
- ans:"أنا بخير الحمد لله"},
-
-{keys:["siapa allah"], 
- ans:"الله هو ربنا خالق كل شيء"},
-
-{keys:["siapa nabi"], 
- ans:"نبينا هو محمد صلى الله عليه وسلم"},
-
-{keys:["berapa rukun islam"], 
- ans:"أركان الإسلام خمسة"},
-
-{keys:["berapa rukun iman"], 
- ans:"أركان الإيمان ستة"},
-
-{keys:["apa itu sholat"], 
- ans:"الصلاة عبادة واجبة خمس مرات في اليوم"},
-
-{keys:["apa itu puasa"], 
- ans:"الصوم هو الإمساك عن الطعام والشراب من الفجر إلى المغرب"},
-
-{keys:["apa itu zakat"], 
- ans:"الزكاة هي إخراج المال للمحتاجين"},
-
-{keys:["siapa kamu"], 
- ans:"أنا أرابيكا صديقتك في التعلم"},
-
-{keys:["terima kasih"], 
- ans:"عفوا بارك الله فيك"}
-
-];
-
-/* ================= DATABASE HAFALAN 10 DOA ================= */
-
-const doaList = [
-
-{ nama:"Doa Sebelum Makan", 
-  teks:"bismillah" },
-
-{ nama:"Doa Sesudah Makan", 
-  teks:"alhamdulillahilladzi at amana wa saqona wa ja alana minal muslimin" },
-
-{ nama:"Doa Sebelum Tidur", 
-  teks:"bismika allahumma ahya wa amut" },
-
-{ nama:"Doa Bangun Tidur", 
-  teks:"alhamdulillahilladzi ahyana bada ma amatana wa ilaihin nusyur" },
-
-{ nama:"Doa Masuk Kamar Mandi", 
-  teks:"allahumma inni audzubika minal khubutsi wal khoba its" },
-
-{ nama:"Doa Keluar Kamar Mandi", 
-  teks:"ghufranaka alhamdulillahilladzi adzhaba annil adza wa afani" },
-
-{ nama:"Doa Masuk Rumah", 
-  teks:"allahumma inni asaluka khairal mauliji wa khairal makhroji" },
-
-{ nama:"Doa Keluar Rumah", 
-  teks:"bismillahi tawakkaltu alallah la haula wala quwwata illa billah" },
-
-{ nama:"Doa Naik Kendaraan", 
-  teks:"subhanalladzi sakhoro lana hadza wa ma kunna lahu muqrinin" },
-
-{ nama:"Doa Sebelum Belajar", 
-  teks:"rabbi zidni ilma warzuqni fahma" }
-
-];
-
-let currentDoa = null;
-
-/* ================= MODE HAFALAN ================= */
-
-function mulaiHafalan(){
-  let randomIndex = Math.floor(Math.random() * doaList.length);
-  currentDoa = doaList[randomIndex];
-
-  document.getElementById("translation").innerText =
-    "Silakan baca: " + currentDoa.nama;
-
-  speak("إقرأ " + currentDoa.nama);
-}
-
-function cekHafalan(text){
-  if(!currentDoa) return;
-
-  let jawaban = text.toLowerCase();
-  let target = currentDoa.teks.toLowerCase();
-
-  if(jawaban.includes(target.substring(0,10))){
-    xp += 2;
-    updateLevel();
-    document.getElementById("translation").innerText =
-      "Masya Allah, hafalan benar!";
-    speak("ما شاء الله حفظك صحيح");
-  }else{
-    document.getElementById("translation").innerText =
-      "Coba lagi ya";
-    speak("حاول مرة أخرى");
-  }
-
-  currentDoa = null;
-}
-
-/* ================= MIC SYSTEM ================= */
-
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const recognition = new SpeechRecognition();
-
-recognition.lang = "id-ID"; // anak tetap ngomong Indonesia
-recognition.continuous = false;
-
-document.getElementById("start-btn").onclick = function(){
-  recognition.start();
-  document.getElementById("status-ar").innerText = "Mendengarkan...";
-};
-
-recognition.onresult = function(event){
-
-  let result = event.results[0][0].transcript.toLowerCase();
-  document.getElementById("output").innerText = result;
-
-  if(currentDoa){
-    cekHafalan(result);
-    return;
-  }
-
-  let foundAnswer = "ما شاء الله سؤالك جميل";
-  let matched = false;
-
-  for(let i=0;i<qaDatabase.length;i++){
-    for(let j=0;j<qaDatabase[i].keys.length;j++){
-      if(result.includes(qaDatabase[i].keys[j])){
-        foundAnswer = qaDatabase[i].ans;
-        matched = true;
-      }
-    }
-  }
-
-  if(matched){
-    xp++;
-    updateLevel();
-  }
-
-  document.getElementById("translation").innerText = foundAnswer;
-  speak(foundAnswer);
-};
-
-recognition.onspeechend = function(){
-  recognition.stop();
-};
 
 </script>
 </body>
