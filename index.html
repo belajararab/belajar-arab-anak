@@ -17,6 +17,34 @@ body{
   text-align:center;
 }
 
+/* ===== AVATAR FOTO ===== */
+.avatar{
+  width:150px;
+  height:150px;
+  margin:20px auto;
+  position:relative;
+}
+
+.avatar img{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  object-fit:cover;
+  border:5px solid #FF6FAE;
+  box-shadow:0 5px 20px rgba(0,0,0,0.3);
+  transition:0.2s;
+}
+
+/* Efek saat bicara */
+.talk{
+  animation: glow 0.5s infinite alternate;
+}
+
+@keyframes glow{
+  from{box-shadow:0 0 10px #ff6fae;}
+  to{box-shadow:0 0 30px #ff1493;}
+}
+
 /* ===== CARD UMUM ===== */
 .section{
   background:white;
@@ -50,58 +78,6 @@ input{
   padding:8px;
   border-radius:10px;
   border:1px solid #ccc;
-}
-
-/* ===== AVATAR 3D ===== */
-.avatar{
-  width:130px;
-  height:130px;
-  margin:20px auto;
-  position:relative;
-}
-.hijab{
-  width:130px;
-  height:130px;
-  background: radial-gradient(circle at 40% 30%, #FFB6D9, #FF6FAE);
-  border-radius:50%;
-  position:absolute;
-}
-.face{
-  width:95px;
-  height:95px;
-  background:#FFE0BD;
-  border-radius:50%;
-  position:absolute;
-  top:20px;
-  left:17px;
-}
-.eye{
-  width:14px;
-  height:14px;
-  background:black;
-  border-radius:50%;
-  position:absolute;
-  top:45px;
-}
-.eye.left{left:40px;}
-.eye.right{right:40px;}
-.mouth{
-  width:35px;
-  height:15px;
-  background:#FF4F81;
-  border-radius:0 0 35px 35px;
-  position:absolute;
-  bottom:35px;
-  left:47px;
-  transition:0.1s;
-}
-.talk{height:30px!important;}
-
-.lock{
-  background:#eee;
-  padding:10px;
-  border-radius:10px;
-  margin-top:10px;
 }
 
 .levelbox{
@@ -160,12 +136,9 @@ input{
 <h2>🌙 Dunia Anak Sholeh</h2>
 <p>Belajar Arab Ceria Anak Muslim</p>
 
+<!-- AVATAR FOTO -->
 <div class="avatar">
-  <div class="hijab"></div>
-  <div class="face"></div>
-  <div class="eye left"></div>
-  <div class="eye right"></div>
-  <div class="mouth" id="mouth"></div>
+  <img id="avatarImg" src="https://www.dropbox.com/scl/fi/isjmai97h2zzojhksgkrq/1000376495.jpg?rlkey=tu6gf34mdj9q09qg9ga3jqvgp&raw=1">
 </div>
 
 <div id="levelBox" class="levelbox"></div>
@@ -194,8 +167,6 @@ input{
 <div id="score"></div>
 </div>
 
-<!-- ================= ARABIKA ================= -->
-
 <div class="arabika-card">
 <h3>🕌 ARABIKA - Kamus Suara</h3>
 
@@ -213,7 +184,7 @@ input{
 
 <script>
 
-/* ================= DUNIA ANAK SHOLEH ================= */
+/* ===== DATA ===== */
 
 let premium=false;
 let level=1;
@@ -228,22 +199,25 @@ function unlock(){
 if(document.getElementById("kode").value==="ANAKSOLEH2026"){
 premium=true;
 document.getElementById("status").innerHTML="✅ Premium Aktif!";
-renderData();
 }
 }
 
 function speak(text){
 let u=new SpeechSynthesisUtterance(text);
 u.lang="ar-SA";
-document.getElementById("mouth").classList.add("talk");
+
+let avatar=document.getElementById("avatarImg");
+avatar.classList.add("talk");
+
 u.onend=function(){
-document.getElementById("mouth").classList.remove("talk");
+avatar.classList.remove("talk");
 }
+
 speechSynthesis.speak(u);
 }
 
-const buahData=[["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"]];
-const hewanData=[["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"]];
+const buahData=[["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"],["بَطِّيخٌ","Semangka"],["أَنَانَاسٌ","Nanas"],["مَانْجَا","Mangga"],["كَرَزٌ","Ceri"],["خَوْخٌ","Persik"],["لَيْمُونٌ","Lemon"],["رُمَّانٌ","Delima"],["جَوَّافَةٌ","Jambu"],["تَمْرٌ","Kurma"],["كُمَّثْرَى","Pir"],["أُفُوكَادُو","Alpukat"],["تِينٌ","Tin"],["زَبِيبٌ","Kismis"],["جُوزُ الْهِنْدِ","Kelapa"],["بَابَايَا","Pepaya"],["كِيوِي","Kiwi"],["سَفَرْجَلٌ","Quince"],["جِرِيبْ فُرُوت","Grapefruit"],["لِيتْشِي","Leci"],["تَمَرْ هِنْدِي","Asam"]];
+const hewanData=[["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"],["بَقَرَةٌ","Sapi"],["حِصَانٌ","Kuda"],["دَجَاجَةٌ","Ayam"],["سَمَكَةٌ","Ikan"],["طَائِرٌ","Burung"],["قِرْدٌ","Monyet"],["نَمِرٌ","Harimau"],["زَرَافَةٌ","Jerapah"],["ذِئْبٌ","Serigala"],["دُبٌّ","Beruang"],["جَمَلٌ","Unta"],["غَنَمٌ","Kambing"],["حِمَارٌ","Keledai"],["فَأْرٌ","Tikus"],["ثُعْبَانٌ","Ular"],["سُلَحْفَاةٌ","Kura-kura"],["ضِفْدَعٌ","Katak"],["نَحْلَةٌ","Lebah"],["بَطَّةٌ","Bebek"],["حُوتٌ","Paus"]];
 
 function renderData(){
 let buahHTML="",hewanHTML="";
@@ -256,21 +230,11 @@ document.getElementById("hewan").innerHTML=hewanHTML;
 }
 renderData();
 
-/* ================= ARABIKA ================= */
+/* ===== ARABIKA ===== */
 
 let currentMode="ar-SA";
-
-document.getElementById("mode-ar").onclick=()=>{
-currentMode="ar-SA";
-document.getElementById("mode-ar").classList.add("active");
-document.getElementById("mode-id").classList.remove("active");
-};
-
-document.getElementById("mode-id").onclick=()=>{
-currentMode="id-ID";
-document.getElementById("mode-id").classList.add("active");
-document.getElementById("mode-ar").classList.remove("active");
-};
+document.getElementById("mode-ar").onclick=()=>currentMode="ar-SA";
+document.getElementById("mode-id").onclick=()=>currentMode="id-ID";
 
 const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
 const recognition=new SpeechRecognition();
@@ -284,7 +248,6 @@ document.getElementById("status-ar").innerText="Mendengarkan...";
 recognition.onresult=(event)=>{
 let result=event.results[0][0].transcript.toLowerCase();
 document.getElementById("output").innerText=result;
-document.getElementById("translation").innerText="Terdeteksi ✔";
 speak(result);
 };
 
