@@ -1,358 +1,295 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dunia Anak Sholeh & Arabika</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root { 
-            --primary: #2d6a4f; 
-            --secondary: #95d5b2; 
-            --pink: #FF6FAE;
-            --yellow: #FFD93D;
-            --bg-gradient: linear-gradient(to bottom, #4FC3F7, #6EE7B7);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dunia Anak Sholeh Super App</title>
 
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            margin: 0; 
-            padding: 0;
-            background: var(--bg-gradient);
-            color: #333;
-            min-height: 100vh;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-        /* Navigasi Tab */
-        .tab-nav {
-            display: flex;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 10px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            justify-content: center;
-            gap: 10px;
-        }
+<style>
+body{
+  font-family: Arial;
+  margin:0;
+  padding:15px;
+  background: linear-gradient(to bottom,#4FC3F7,#6EE7B7);
+  color:white;
+  text-align:center;
+}
 
-        .tab-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-            background: #eee;
-        }
+/* ===== CARD UMUM ===== */
+.section{
+  background:white;
+  color:#333;
+  margin:20px auto;
+  padding:15px;
+  border-radius:20px;
+  max-width:500px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
 
-        .tab-btn.active {
-            background: var(--primary);
-            color: white;
-        }
+.word{
+  background:#FFD93D;
+  margin:6px;
+  padding:8px;
+  border-radius:10px;
+  cursor:pointer;
+}
 
-        .page { display: none; padding: 20px; animation: fadeIn 0.5s; }
-        .page.active { display: block; }
+button{
+  background:#FF6FAE;
+  border:none;
+  padding:10px 15px;
+  margin:6px;
+  border-radius:12px;
+  color:white;
+  cursor:pointer;
+}
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+input{
+  padding:8px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
 
-        /* Style Dunia Anak Sholeh */
-        .title {
-            font-size: 28px;
-            font-weight: bold;
-            background: linear-gradient(45deg, #FFD93D, #FF6FAE);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: center;
-        }
+/* ===== AVATAR 3D ===== */
+.avatar{
+  width:130px;
+  height:130px;
+  margin:20px auto;
+  position:relative;
+}
+.hijab{
+  width:130px;
+  height:130px;
+  background: radial-gradient(circle at 40% 30%, #FFB6D9, #FF6FAE);
+  border-radius:50%;
+  position:absolute;
+}
+.face{
+  width:95px;
+  height:95px;
+  background:#FFE0BD;
+  border-radius:50%;
+  position:absolute;
+  top:20px;
+  left:17px;
+}
+.eye{
+  width:14px;
+  height:14px;
+  background:black;
+  border-radius:50%;
+  position:absolute;
+  top:45px;
+}
+.eye.left{left:40px;}
+.eye.right{right:40px;}
+.mouth{
+  width:35px;
+  height:15px;
+  background:#FF4F81;
+  border-radius:0 0 35px 35px;
+  position:absolute;
+  bottom:35px;
+  left:47px;
+  transition:0.1s;
+}
+.talk{height:30px!important;}
 
-        .section {
-            background: white;
-            margin: 20px auto;
-            padding: 15px;
-            border-radius: 20px;
-            max-width: 500px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            text-align: center;
-        }
+.lock{
+  background:#eee;
+  padding:10px;
+  border-radius:10px;
+  margin-top:10px;
+}
 
-        .word {
-            background: var(--yellow);
-            display: inline-block;
-            margin: 6px;
-            padding: 8px 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+.levelbox{
+  background:white;
+  color:#333;
+  padding:8px;
+  border-radius:12px;
+  max-width:300px;
+  margin:10px auto;
+  font-weight:bold;
+}
 
-        button.pink-btn {
-            background: var(--pink);
-            border: none;
-            padding: 10px 15px;
-            margin: 6px;
-            border-radius: 12px;
-            color: white;
-            cursor: pointer;
-        }
+/* ===== ARABIKA STYLE ===== */
+.arabika-card{
+  font-family:'Poppins',sans-serif;
+  background:white;
+  color:#333;
+  border-radius:30px;
+  padding:20px;
+  max-width:450px;
+  margin:30px auto;
+  box-shadow:0 20px 40px rgba(0,0,0,0.1);
+}
 
-        /* Style Arabika */
-        .app-card { 
-            width: 95%; 
-            max-width: 450px; 
-            background: white; 
-            border-radius: 30px; 
-            margin: 0 auto;
-            overflow: hidden; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
-            text-align: center; 
-        }
-        .header-arabika { 
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
-            padding: 20px; 
-            color: white; 
-        }
-        .mode-btn { 
-            padding: 8px 15px; 
-            border-radius: 20px; 
-            border: 2px solid var(--primary); 
-            background: transparent; 
-            cursor: pointer; 
-            font-size: 12px; 
-            font-weight: bold; 
-            color: var(--primary); 
-        }
-        .mode-btn.active { background: var(--primary); color: white; }
-        #output-container { 
-            background: #f1f8e9; 
-            border-radius: 15px; 
-            padding: 15px; 
-            margin: 15px; 
-            border: 2px solid var(--secondary); 
-        }
-        .mic-btn { 
-            background: var(--primary); 
-            color: white; 
-            border: none; 
-            width: 70px; 
-            height: 70px; 
-            border-radius: 50%; 
-            font-size: 30px; 
-            cursor: pointer; 
-            margin: 10px auto;
-        }
-        .listening { background: #e63946; animation: pulse 1.5s infinite; }
+.mode-btn{
+  padding:8px 15px;
+  border-radius:20px;
+  border:2px solid #2d6a4f;
+  background:transparent;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:bold;
+  color:#2d6a4f;
+}
 
-        /* Avatar Animation */
-        .avatar {
-            width: 140px; height: 140px;
-            margin: 15px auto;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 5px solid white;
-        }
-        .avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .talkEffect { animation: bounce 0.6s infinite alternate; box-shadow: 0 0 20px var(--pink); }
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(230, 57, 70, 0); } 100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); } }
-    </style>
+.mode-btn.active{
+  background:#2d6a4f;
+  color:white;
+}
+
+.mic-btn{
+  background:#2d6a4f;
+  color:white;
+  border:none;
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  font-size:30px;
+  cursor:pointer;
+}
+</style>
 </head>
+
 <body>
 
-<div class="tab-nav">
-    <button class="tab-btn active" onclick="openTab('dunia-anak')">🌙 Dunia Anak</button>
-    <button class="tab-btn" onclick="openTab('arabika')">🕌 Arabika Voice</button>
+<h2>🌙 Dunia Anak Sholeh</h2>
+<p>Belajar Arab Ceria Anak Muslim</p>
+
+<div class="avatar">
+  <div class="hijab"></div>
+  <div class="face"></div>
+  <div class="eye left"></div>
+  <div class="eye right"></div>
+  <div class="mouth" id="mouth"></div>
 </div>
 
-<div id="dunia-anak" class="page active">
-    <div class="title">🌙 Dunia Anak Sholeh</div>
-    <div style="text-align:center; color:white;">Belajar Arab Ceria Anak Muslim</div>
+<div id="levelBox" class="levelbox"></div>
 
-    <div class="section">
-        <button class="pink-btn" onclick="startMusic()">▶️ Mulai Musik</button>
-        <audio id="bgAudio" loop>
-            <source src="https://actions.google.com/sounds/v1/ambiences/children_playing.ogg">
-        </audio>
-
-        <div class="avatar" id="avatar">
-            <img src="https://www.dropbox.com/scl/fi/isjmai97h2zzojhksgkrq/1000376495.jpg?rlkey=tu6gf34mdj9q09qg9ga3jqvgp&raw=1">
-        </div>
-        <div id="levelBox" style="font-weight:bold; margin-bottom:10px;"></div>
-    </div>
-
-    <div class="section">
-        <h3>🔓 Aktifkan Premium</h3>
-        <input type="password" id="kode" placeholder="Masukkan kode">
-        <button class="pink-btn" onclick="unlock()">Unlock</button>
-        <div id="status"></div>
-    </div>
-
-    <div class="section">
-        <h3>🍎 Belajar Buah</h3>
-        <div id="buah"></div>
-    </div>
-
-    <div class="section">
-        <h3>🐰 Belajar Hewan</h3>
-        <div id="hewan"></div>
-    </div>
-
-    <div class="section">
-        <h3>🤖 Chat Arab Pintar</h3>
-        <input id="chatInput" placeholder="Tulis pertanyaan">
-        <button class="pink-btn" onclick="chat()">Kirim</button>
-        <div id="chatBox" style="margin-top:10px; font-weight:bold;"></div>
-    </div>
+<div class="section">
+<h3>🔓 Aktifkan Premium</h3>
+<input type="password" id="kode" placeholder="Masukkan kode">
+<button onclick="unlock()">Unlock</button>
+<div id="status"></div>
 </div>
 
-<div id="arabika" class="page">
-    <div class="app-card">
-        <div class="header-arabika">
-            <div style="font-size: 35px;">🕌</div>
-            <h1 style="margin: 5px 0;">ARABIKA</h1>
-            <p style="margin: 0; font-size: 12px;">Kamus Suara & Percakapan</p>
-        </div>
-        <div class="content" id="main-content-arabika" style="padding:20px;">
-            <div style="display:flex; gap:10px; justify-content:center; margin-bottom:15px;">
-                <button id="mode-ar" class="mode-btn active">Bicara Arab</button>
-                <button id="mode-id" class="mode-btn">Sebut Benda (Indo)</button>
-            </div>
-            <div id="status-voice" style="font-size: 12px; color: #888;">Ketuk mic untuk mulai</div>
-            <div id="output-container">
-                <div id="output-voice" style="font-size:24px; color:var(--primary); font-weight:bold;">...</div>
-                <div id="translation-voice" style="font-size:14px; font-weight:600;">Hasil terjemahan</div>
-                <div id="tip-voice" style="font-size:11px; color:#e67e22; font-style:italic; margin-top:5px;"></div>
-            </div>
-            <button id="start-btn" class="mic-btn">🎙️</button>
-            <div id="guide-text" style="font-size:11px; margin-top:15px; color:#666;">Mode Bicara Arab: Ucapkan salam.</div>
-        </div>
-    </div>
+<div class="section">
+<h3>🍎 Belajar Buah</h3>
+<div id="buah"></div>
+</div>
+
+<div class="section">
+<h3>🐰 Belajar Hewan</h3>
+<div id="hewan"></div>
+</div>
+
+<div class="section">
+<h3>👧 Quiz</h3>
+<button onclick="startQuiz()">Mulai Quiz</button>
+<div id="quizArea"></div>
+<div id="score"></div>
+</div>
+
+<!-- ================= ARABIKA ================= -->
+
+<div class="arabika-card">
+<h3>🕌 ARABIKA - Kamus Suara</h3>
+
+<div>
+<button id="mode-ar" class="mode-btn active">Bicara Arab</button>
+<button id="mode-id" class="mode-btn">Sebut Indo</button>
+</div>
+
+<p id="status-ar">Ketuk mic untuk mulai</p>
+<div id="output" style="font-size:22px;direction:rtl;"></div>
+<div id="translation"></div>
+
+<button id="start-btn" class="mic-btn">🎙️</button>
 </div>
 
 <script>
-/* LOGIKA NAVIGASI */
-function openTab(tabName) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(tabName).classList.add('active');
-    event.currentTarget.classList.add('active');
-}
 
-/* LOGIKA DUNIA ANAK SHOLEH */
-let premium = localStorage.getItem("premium") === "true";
-let level = parseInt(localStorage.getItem("level")) || 1;
-let stars = parseInt(localStorage.getItem("stars")) || 0;
+/* ================= DUNIA ANAK SHOLEH ================= */
 
-function updateLevelUI() {
-    document.getElementById("levelBox").innerHTML = "⭐ " + stars + " | 🏆 Level " + level;
+let premium=false;
+let level=1;
+let stars=0;
+
+function updateLevelUI(){
+document.getElementById("levelBox").innerHTML="⭐ "+stars+" | 🏆 Level "+level;
 }
 updateLevelUI();
 
-function startMusic() { document.getElementById("bgAudio").play(); }
-
-function unlock() {
-    let kode = document.getElementById("kode").value;
-    if (kode === "ANAKSOLEH2026") {
-        premium = true;
-        localStorage.setItem("premium", "true");
-        document.getElementById("status").innerHTML = "✅ Premium Aktif!";
-    } else {
-        document.getElementById("status").innerHTML = "❌ Kode Salah";
-    }
+function unlock(){
+if(document.getElementById("kode").value==="ANAKSOLEH2026"){
+premium=true;
+document.getElementById("status").innerHTML="✅ Premium Aktif!";
+renderData();
+}
 }
 
-function speak(text) {
-    let u = new SpeechSynthesisUtterance(text);
-    u.lang = "ar-SA";
-    let avatar = document.getElementById("avatar");
-    avatar.classList.add("talkEffect");
-    u.onend = () => avatar.classList.remove("talkEffect");
-    speechSynthesis.speak(u);
+function speak(text){
+let u=new SpeechSynthesisUtterance(text);
+u.lang="ar-SA";
+document.getElementById("mouth").classList.add("talk");
+u.onend=function(){
+document.getElementById("mouth").classList.remove("talk");
+}
+speechSynthesis.speak(u);
 }
 
-const buahData = [["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"]];
-const hewanData = [["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"]];
+const buahData=[["تُفَّاحٌ","Apel"],["مَوْزٌ","Pisang"],["بُرْتُقَالٌ","Jeruk"],["عِنَبٌ","Anggur"],["فَرَاوِلَةٌ","Stroberi"]];
+const hewanData=[["قِطٌّ","Kucing"],["كَلْبٌ","Anjing"],["أَرْنَبٌ","Kelinci"],["فِيلٌ","Gajah"],["أَسَدٌ","Singa"]];
 
-function renderData() {
-    let bH = "", hH = "";
-    buahData.forEach(d => bH += `<div class="word" onclick="speak('${d[0]}')">${d[0]} - ${d[1]}</div>`);
-    hewanData.forEach(d => hH += `<div class="word" onclick="speak('${d[0]}')">${d[0]} - ${d[1]}</div>`);
-    document.getElementById("buah").innerHTML = bH;
-    document.getElementById("hewan").innerHTML = hH;
+function renderData(){
+let buahHTML="",hewanHTML="";
+for(let i=0;i<buahData.length;i++){
+buahHTML+=`<div class="word" onclick="speak('${buahData[i][0]}')">${buahData[i][0]} - ${buahData[i][1]}</div>`;
+hewanHTML+=`<div class="word" onclick="speak('${hewanData[i][0]}')">${hewanData[i][0]} - ${hewanData[i][1]}</div>`;
+}
+document.getElementById("buah").innerHTML=buahHTML;
+document.getElementById("hewan").innerHTML=hewanHTML;
 }
 renderData();
 
-function chat() {
-    let input = document.getElementById("chatInput").value.toLowerCase();
-    let reply = "عذراً لم أفهم السؤال";
-    if(input.includes("سلام")) reply="وعليكم السلام ورحmente الله وبركاته 💕";
-    if(input.includes("allah")) reply="الله ربنا خالق كل شيء 🌙";
-    document.getElementById("chatBox").innerHTML = "🤖 " + reply;
-    speak(reply);
-}
+/* ================= ARABIKA ================= */
 
-/* LOGIKA ARABIKA VOICE */
-const database = {
-    "kambing": { ar: "غنم", tip: "Huruf Gho (غ) seperti berkumur." },
-    "kucing": { ar: "قطة", tip: "Qof (ق) tebal di pangkal lidah." },
-    "sapi": { ar: "بقرة", tip: "Qof (ق) berada di tenggorokan atas." },
-    "السلام عليكم": { id: "Salam", response: "وعليكم السلام ورحمة الله وبركاته", tip: "Makhraj Sin (س) harus bersih." }
+let currentMode="ar-SA";
+
+document.getElementById("mode-ar").onclick=()=>{
+currentMode="ar-SA";
+document.getElementById("mode-ar").classList.add("active");
+document.getElementById("mode-id").classList.remove("active");
 };
 
-let currentMode = 'ar-SA';
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const recognition = new SpeechRecognition();
-
-document.getElementById('mode-ar').onclick = () => { 
-    currentMode = 'ar-SA'; 
-    updateModeUI('mode-ar', "Mode Bicara Arab: Ucapkan Salam."); 
-};
-document.getElementById('mode-id').onclick = () => { 
-    currentMode = 'id-ID'; 
-    updateModeUI('mode-id', "Mode Tebak Kata: Sebut nama buah/hewan."); 
+document.getElementById("mode-id").onclick=()=>{
+currentMode="id-ID";
+document.getElementById("mode-id").classList.add("active");
+document.getElementById("mode-ar").classList.remove("active");
 };
 
-function updateModeUI(id, txt) {
-    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.getElementById('guide-text').innerText = txt;
-}
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+const recognition=new SpeechRecognition();
 
-document.getElementById('start-btn').onclick = () => {
-    recognition.lang = currentMode;
-    recognition.start();
-    document.getElementById('start-btn').classList.add('listening');
-    document.getElementById('status-voice').innerText = "Mendengarkan...";
+document.getElementById("start-btn").onclick=()=>{
+recognition.lang=currentMode;
+recognition.start();
+document.getElementById("status-ar").innerText="Mendengarkan...";
 };
 
-recognition.onresult = (event) => {
-    const result = event.results[0][0].transcript.toLowerCase();
-    document.getElementById('output-voice').innerText = result;
-    document.getElementById('start-btn').classList.remove('listening');
-    
-    let found = false;
-    for (let key in database) {
-        if (result.includes(key)) {
-            const data = database[key];
-            if (currentMode === 'id-ID') {
-                document.getElementById('output-voice').innerText = data.ar;
-                document.getElementById('translation-voice').innerText = `Bahasa Arab: ${data.ar}`;
-                speak(data.ar);
-            } else {
-                document.getElementById('translation-voice').innerText = `Arti: ${data.id}`;
-                setTimeout(() => speak(data.response), 500);
-            }
-            document.getElementById('tip-voice').innerText = `💡 Tips: ${data.tip}`;
-            found = true; break;
-        }
-    }
-    if(!found) document.getElementById('translation-voice').innerText = "Kata belum ada di modul.";
+recognition.onresult=(event)=>{
+let result=event.results[0][0].transcript.toLowerCase();
+document.getElementById("output").innerText=result;
+document.getElementById("translation").innerText="Terdeteksi ✔";
+speak(result);
 };
 
-recognition.onspeechend = () => { 
-    recognition.stop(); 
-    document.getElementById('start-btn').classList.remove('listening'); 
-};
+recognition.onspeechend=()=>recognition.stop();
+
 </script>
 </body>
 </html>
