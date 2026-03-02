@@ -245,16 +245,47 @@ recognition.start();
 document.getElementById("status-ar").innerText="Mendengarkan...";
 };
 
-recognition.onresult=(event)=>{
-let result=event.results[0][0].transcript.toLowerCase();
-document.getElementById("output").innerText=result;
-speak(result);
+/* ================= DATABASE INDONESIA ➜ ARAB ================= */
+
+const qaDatabase = [
+
+{keys:["assalamualaikum"], ans:"وعليكم السلام ورحمة الله وبركاته"},
+{keys:["apa kabar"], ans:"أنا بخير الحمد لله"},
+{keys:["siapa allah"], ans:"الله هو ربنا خالق كل شيء"},
+{keys:["siapa nabi"], ans:"نبينا هو محمد صلى الله عليه وسلم"},
+{keys:["berapa rukun islam"], ans:"أركان الإسلام خمسة"},
+{keys:["berapa rukun iman"], ans:"أركان الإيمان ستة"},
+{keys:["apa itu sholat"], ans:"الصلاة عبادة واجبة خمس مرات في اليوم"},
+{keys:["apa itu puasa"], ans:"الصوم هو الإمساك عن الطعام والشراب من الفجر إلى المغرب"},
+{keys:["siapa kamu"], ans:"أنا أرابيكا صديقتك في التعلم"},
+{keys:["terima kasih"], ans:"عفوا بارك الله فيك"}
+
+];
+
+
+/* ================= RESPONSE SYSTEM ================= */
+
+
+
+  let foundAnswer = "ما شاء الله سؤال جميل";
+  let matched = false;
+
+  for(let i=0;i<qaDatabase.length;i++){
+    for(let j=0;j<qaDatabase[i].keys.length;j++){
+      if(result.includes(qaDatabase[i].keys[j])){
+        foundAnswer = qaDatabase[i].ans;
+        matched = true;
+      }
+    }
+  }
+
+  document.getElementById("translation").innerText = foundAnswer;
+  speak(foundAnswer);
 };
 
 recognition.onspeechend=()=>recognition.stop();
 
 </script>
-  <script>
 
 /* ================= AVATAR SPEAK (SUARA ARAB) ================= */
 function speak(text){
